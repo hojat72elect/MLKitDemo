@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // register listeners
         binding.mainLv.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, view, position, id ->
+            AdapterView.OnItemClickListener { _, _, position, _ ->
                 Toast.makeText(this, optionsList[position], Toast.LENGTH_SHORT).show()
             }
 
