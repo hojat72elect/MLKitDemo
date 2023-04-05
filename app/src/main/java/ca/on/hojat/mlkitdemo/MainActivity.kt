@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         "CameraX live preview vision detectors",
         "Still image vision detector",
         "Live camera translator",
-        "Code scanner",
         "Digital ink recognition"
     )
 
