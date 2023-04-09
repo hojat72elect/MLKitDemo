@@ -1,10 +1,12 @@
 package ca.on.hojat.mlkitdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors.CameraXLivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
 
 
@@ -35,7 +37,19 @@ class MainActivity : AppCompatActivity() {
         // register listeners
         binding.mainLv.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                Toast.makeText(this, optionsList[position], Toast.LENGTH_SHORT).show()
+
+                when (position) {
+                    0 -> {
+                        // go to CameraXLivePreviewActivity
+                        val intent =
+                            Intent(applicationContext, CameraXLivePreviewActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else -> {
+                        Toast.makeText(this, optionsList[position], Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             }
 
 
