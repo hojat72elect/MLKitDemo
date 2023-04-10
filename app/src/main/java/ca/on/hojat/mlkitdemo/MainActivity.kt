@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors.CameraXLivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
+import ca.on.hojat.mlkitdemo.livecameratranslator.LiveCameraTranslatorActivity
 import ca.on.hojat.mlkitdemo.stillimagevisiondetector.StillImageActivity
 
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         // live camera translator
                         val intent = Intent(
                             applicationContext,
-                            ca.on.hojat.mlkitdemo.livecameratranslator.MainActivity::class.java
+                            LiveCameraTranslatorActivity::class.java
                         )
                         startActivity(intent)
                     }

@@ -41,10 +41,10 @@ import kotlin.math.ln
 import kotlin.math.max
 import kotlin.math.min
 
-class MainFragment : Fragment() {
+class LiveCameraTranslatorFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = LiveCameraTranslatorFragment()
 
         // We only need to analyze the part of the image that has text, so we set crop percentages
         // to avoid analyze the entire image from the live camera feed.
