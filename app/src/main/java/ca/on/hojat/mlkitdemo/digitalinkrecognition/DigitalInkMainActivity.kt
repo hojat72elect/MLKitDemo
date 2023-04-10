@@ -6,10 +6,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
-import ca.on.hojat.mlkitdemo.R
+import ca.on.hojat.mlkitdemo.databinding.ActivityDigitalInkMainKotlinBinding
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSortedSet
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier
@@ -17,6 +16,9 @@ import java.util.Locale
 
 /** Main activity which creates a StrokeManager and connects it to the DrawingView. */
 class DigitalInkMainActivity : AppCompatActivity(), StrokeManager.DownloadedModelsChangedListener {
+
+    private lateinit var binding: ActivityDigitalInkMainKotlinBinding
+
     @JvmField
     @VisibleForTesting
     val strokeManager = StrokeManager()
@@ -24,23 +26,22 @@ class DigitalInkMainActivity : AppCompatActivity(), StrokeManager.DownloadedMode
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_digital_ink_main_kotlin)
-        val languageSpinner = findViewById<Spinner>(R.id.languages_spinner)
-        val drawingView = findViewById<DrawingView>(R.id.drawing_view)
-        val statusTextView = findViewById<StatusTextView>(R.id.status_text_view)
-        drawingView.setStrokeManager(strokeManager)
-        statusTextView.setStrokeManager(strokeManager)
-        strokeManager.setStatusChangedListener(statusTextView)
-        strokeManager.setContentChangedListener(drawingView)
+        binding = ActivityDigitalInkMainKotlinBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.drawingView.setStrokeManager(strokeManager)
+        binding.statusTextView.setStrokeManager(strokeManager)
+        strokeManager.setStatusChangedListener(binding.statusTextView)
+        strokeManager.setContentChangedListener(binding.drawingView)
         strokeManager.setDownloadedModelsChangedListener(this)
         strokeManager.setClearCurrentInkAfterRecognition(true)
         strokeManager.setTriggerRecognitionAfterInput(false)
         languageAdapter = populateLanguageAdapter()
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        languageSpinner.adapter = languageAdapter
+        binding.languagesSpinner.adapter = languageAdapter
         strokeManager.refreshDownloadedModelsStatus()
 
-        languageSpinner.onItemSelectedListener =
+        binding.languagesSpinner.onItemSelectedListener =
             object : OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -60,24 +61,21 @@ class DigitalInkMainActivity : AppCompatActivity(), StrokeManager.DownloadedMode
                 }
             }
         strokeManager.reset()
-    }
 
-    fun downloadClick(v: View?) {
-        strokeManager.download()
-    }
-
-    fun recognizeClick(v: View?) {
-        strokeManager.recognize()
-    }
-
-    fun clearClick(v: View?) {
-        strokeManager.reset()
-        val drawingView = findViewById<DrawingView>(R.id.drawing_view)
-        drawingView.clear()
-    }
-
-    fun deleteClick(v: View?) {
-        strokeManager.deleteActiveModel()
+        // register some other listeners
+        binding.downloadButton.setOnClickListener {
+            strokeManager.download()
+        }
+        binding.recognizeButton.setOnClickListener {
+            strokeManager.recognize()
+        }
+        binding.clearButton.setOnClickListener {
+            strokeManager.reset()
+            binding.drawingView.clear()
+        }
+        binding.deleteButton.setOnClickListener {
+            strokeManager.deleteActiveModel()
+        }
     }
 
     private class ModelLanguageContainer

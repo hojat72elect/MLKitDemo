@@ -37,7 +37,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="downloadClick"
                     android:text="Download" />
 
                 <Button
@@ -45,7 +44,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="recognizeClick"
                     android:text="Recognize" />
 
                 <Button
@@ -53,7 +51,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="clearClick"
                     android:text="Clear" />
             </LinearLayout>
         </LinearLayout>
@@ -79,7 +76,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="deleteClick"
                 android:text="Delete model" />
         </LinearLayout>
     </FrameLayout>
