@@ -32,7 +32,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import ca.on.hojat.mlkitdemo.R
 import ca.on.hojat.mlkitdemo.common.ScopedExecutor
-import ca.on.hojat.mlkitdemo.databinding.MainFragmentBinding
+import ca.on.hojat.mlkitdemo.databinding.LiveCameraTranslatorFragmentBinding
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -63,7 +63,7 @@ class LiveCameraTranslatorFragment : Fragment() {
         private const val TAG = "MainFragment"
     }
 
-    private var _binding: MainFragmentBinding? = null
+    private var _binding: LiveCameraTranslatorFragmentBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -84,7 +84,7 @@ class LiveCameraTranslatorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        _binding = LiveCameraTranslatorFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }
