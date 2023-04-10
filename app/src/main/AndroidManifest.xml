@@ -11,6 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MLKitDemo"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Optional: Add it to automatically download ML model to device after
+          your app is installed.-->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode,face,ocr,ica,custom_ica" />
+
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -23,7 +36,8 @@
 
         <activity
             android:name=".cameralivepreviewvisiondetectors.CameraXLivePreviewActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
 
 
     </application>
