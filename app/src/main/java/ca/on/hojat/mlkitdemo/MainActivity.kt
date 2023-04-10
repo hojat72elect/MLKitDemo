@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         // register listeners
         binding.mainLv.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-
                 when (position) {
                     0 -> {
                         // go to CameraXLivePreviewActivity
@@ -51,13 +50,18 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(applicationContext, StillImageActivity::class.java)
                         startActivity(intent)
                     }
+                    2 -> {
+                        // live camera translator
+                        val intent = Intent(
+                            applicationContext,
+                            ca.on.hojat.mlkitdemo.livecameratranslator.MainActivity::class.java
+                        )
+                        startActivity(intent)
+                    }
                     else -> {
                         Toast.makeText(this, optionsList[position], Toast.LENGTH_SHORT).show()
                     }
                 }
-
             }
-
-
     }
 }
