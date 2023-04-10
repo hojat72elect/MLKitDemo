@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors.CameraXLivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
+import ca.on.hojat.mlkitdemo.stillimagevisiondetector.StillImageActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
                         // go to CameraXLivePreviewActivity
                         val intent =
                             Intent(applicationContext, CameraXLivePreviewActivity::class.java)
+                        startActivity(intent)
+                    }
+                    1 -> {
+                        // go to StillImageActivity
+                        val intent = Intent(applicationContext, StillImageActivity::class.java)
                         startActivity(intent)
                     }
                     else -> {
