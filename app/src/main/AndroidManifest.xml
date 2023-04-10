@@ -58,6 +58,11 @@
             android:exported="false"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".digitalinkrecognition.DigitalInkMainActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme" />
+
 
     </application>
 

@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors.CameraXLivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
+import ca.on.hojat.mlkitdemo.digitalinkrecognition.DigitalInkMainActivity
 import ca.on.hojat.mlkitdemo.livecameratranslator.LiveCameraTranslatorActivity
 import ca.on.hojat.mlkitdemo.stillimagevisiondetector.StillImageActivity
 
@@ -59,8 +59,9 @@ class MainActivity : AppCompatActivity() {
                         )
                         startActivity(intent)
                     }
-                    else -> {
-                        Toast.makeText(this, optionsList[position], Toast.LENGTH_SHORT).show()
+                    3 -> {
+                        val intent = Intent(applicationContext, DigitalInkMainActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             }
