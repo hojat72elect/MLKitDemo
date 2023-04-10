@@ -91,7 +91,7 @@ class LiveCameraTranslatorFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        _binding = null
         // Shut down the scoped executor. The camera executor will automatically shut down its
         // background threads after 60s of idling.
         scopedExecutor.shutdown()
