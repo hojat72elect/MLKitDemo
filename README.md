@@ -15,6 +15,14 @@ Example results:
 <br/>
 <img src="media/face_mesh_1.jpg" width="30%" alt="face mesh 1"/>
 <li><h3>Text recognition</h3></li>
+This algorithm can recognize and extract text from images.
+<br/>
+<br/>
+Some examples: 
+<br/>
+<br/>
+<img src="media/text_recognition-1.jpg" width="30%" alt="before applying text recognition"/>
+<img src="media/text_recognition-2.jpg" width="30%" alt="after applying text recognition"/>
 <li><h3>Pose detection</h3></li>
 Detecting the position of human body in any given picture/video in real-time.
 <br/>
@@ -43,7 +51,6 @@ Example results of object detection:
 <img src="media/object_detection_3.jpg" width="30%" alt="Object detection 3"/>
 <img src="media/object_detection_4.jpg" width="30%" alt="Object detection 4"/>
 <img src="media/object_detection_5.jpg" width="30%" alt="Object detection 5"/>
-
 <li><h3>Barcode scanner</h3></li>
 Scanning and processing most kinds of barcodes. Supports various standard 1D and 2D (a.k.a. QR) barcode formats.
 <br/>
