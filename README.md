@@ -33,6 +33,24 @@ Separates the background of a picture/video from users within it. Helps to focus
 <br/>
 <li><h3>Object detection</h3></li>
 <li><h3>Barcode scanner</h3></li>
+Scanning and processing most kinds of barcodes. Supports various standard 1D and 2D (a.k.a. QR) barcode formats.
+<br/>
+<br/>
+Example result of barcode scanner:
+<br/>
+<br/>
+<img src="media/barcode_scanner_1.jpg" width="30%" alt="Barcode scanner 1"/>
+<br/>
+<br/>
+A video demo of barcode scanner:
+<br/>
+
+<details>
+<summary><b>Realtime barcode scanner video demo</b></summary>
+
+
+https://user-images.githubusercontent.com/8706521/231256249-17ea1166-c330-4a24-9889-1bb8b0100fae.mp4
+</details>
 <li><h3>Image labeling</h3></li>
 This algorithm identifies objects, locations, activities, animal species, products and more in a given picture.<br/>
 For example, in the picture below, it has managed to label the <b>road</b>, <b>Jeans</b>, <b>Jacket</b>, and <b>Building</b>s in the picture correctly.
@@ -49,7 +67,7 @@ Example results:
 <img src="media/face_detection_1.jpg" width="30%" alt="face detection 1"/>
 <li><h3>Live Camera translator</h3></li>
 <li><h3>Digital ink recognition</h3></li>
-This part of the app recognizes handwritten text and handdrawn shapes (such as emojis) on a digital surface, such as a touch screen. 
+This part of the app recognizes handwritten text and hand-drawn shapes (such as emojis) on a digital surface, such as a touch screen. 
 <br/>
 <br/>
 Some examples:
