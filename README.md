@@ -49,4 +49,17 @@ Example results:
 <img src="media/face_detection_1.jpg" width="30%" alt="face detection 1"/>
 <li><h3>Live Camera translator</h3></li>
 <li><h3>Digital ink recognition</h3></li>
+This part of the app recognizes handwritten text and handdrawn shapes (such as emojis) on a digital surface, such as a touch screen. 
+<br/>
+<br/>
+Some examples:
+<br/>
+<br/>
+<img src="media/digital_ink_recognition_1.jpg" width="30%" alt="Digital ink recognition 1"/>
+<img src="media/digital_ink_recognition_2.jpg" width="30%" alt="Digital ink recognition 2"/>
+<br/>
+<br/>
+A video demo of digital ink recognition:
+<br/>
+
 </ol>
