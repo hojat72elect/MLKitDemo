@@ -66,6 +66,20 @@ Example results:
 <br/>
 <img src="media/face_detection_1.jpg" width="30%" alt="face detection 1"/>
 <li><h3>Live Camera translator</h3></li>
+This amazing demo camera app firstly determines the language of a string of text with just a few words. And then, translates that text between 58 languages; completely on device. 
+<br/>
+<br/>
+A video demo of realtime camera translator:
+<br/>
+
+<details>
+<summary><b>Live camera translator video demo</b></summary>
+
+
+https://user-images.githubusercontent.com/8706521/231260485-a44a559e-6e96-4fd3-aae5-b897d7442d5b.mp4
+</details>
+
+
 <li><h3>Digital ink recognition</h3></li>
 This part of the app recognizes handwritten text and hand-drawn shapes (such as emojis) on a digital surface, such as a touch screen. 
 <br/>
