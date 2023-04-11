@@ -61,5 +61,9 @@ Some examples:
 <br/>
 A video demo of digital ink recognition:
 <br/>
+<details>
+<summary><b>Digital ink recognition video demo</b></summary>
+https://user-images.githubusercontent.com/8706521/231075026-13e46bb5-c3b5-4e77-8fad-ed2a72e66c89.mp4
+</details>
 
 </ol>
