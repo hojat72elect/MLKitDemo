@@ -119,3 +119,9 @@ https://user-images.githubusercontent.com/8706521/231075026-13e46bb5-c3b5-4e77-8
 </details>
 
 </ol>
+
+### Development:
+
+Please star and fork this repo, I will be maintaining it over time and will try to add more ML related library demos to
+it.<br/>
+Feel free to open issues and point out the bugs and short-comings.
