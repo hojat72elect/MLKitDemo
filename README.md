@@ -32,6 +32,18 @@ Separates the background of a picture/video from users within it. Helps to focus
 <br/>
 <br/>
 <li><h3>Object detection</h3></li>
+Localize and tag in realtime one or more objects in the live camera feed.
+<br/>
+<br/>
+Example results of object detection:
+<br/>
+<br/>
+<img src="media/object_detection_1.jpg" width="30%" alt="Object detection 1"/>
+<img src="media/object_detection_2.jpg" width="30%" alt="Object detection 2"/>
+<img src="media/object_detection_3.jpg" width="30%" alt="Object detection 3"/>
+<img src="media/object_detection_4.jpg" width="30%" alt="Object detection 4"/>
+<img src="media/object_detection_5.jpg" width="30%" alt="Object detection 5"/>
+
 <li><h3>Barcode scanner</h3></li>
 Scanning and processing most kinds of barcodes. Supports various standard 1D and 2D (a.k.a. QR) barcode formats.
 <br/>
@@ -78,8 +90,6 @@ A video demo of realtime camera translator:
 
 https://user-images.githubusercontent.com/8706521/231260485-a44a559e-6e96-4fd3-aae5-b897d7442d5b.mp4
 </details>
-
-
 <li><h3>Digital ink recognition</h3></li>
 This part of the app recognizes handwritten text and hand-drawn shapes (such as emojis) on a digital surface, such as a touch screen. 
 <br/>
