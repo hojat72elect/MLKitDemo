@@ -1,26 +1,26 @@
 package ca.on.hojat.mlkitdemo;
 
-import android.view.SurfaceHolder;
-
-
-import java.util.List;
-import java.util.ArrayList;
-import java.io.IOException;
-import ca.on.hojat.mlkitdemo.common.VisionImageProcessor;
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay;
-import android.hardware.Camera;
-import android.hardware.Camera.Size;
-import android.hardware.Camera.Parameters;
-import android.hardware.Camera.CameraInfo;
-import android.graphics.ImageFormat;
-import android.util.Log;
-import android.annotation.SuppressLint;
-import androidx.annotation.RequiresPermission;
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
+import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
+import android.util.Log;
 import android.view.SurfaceHolder;
-import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils;
+
+import androidx.annotation.RequiresPermission;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.on.hojat.mlkitdemo.common.FrameMetadata;
+import ca.on.hojat.mlkitdemo.common.GraphicOverlay;
+import ca.on.hojat.mlkitdemo.common.VisionImageProcessor;
+import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils;
 
 /**
  * Manages the camera and allows UI updates on top of it (e.g. overlaying extra Graphics or

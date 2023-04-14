@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
+import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
 import ca.on.hojat.mlkitdemo.digital_ink_recognition.DigitalInkMainActivity
-import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity
+import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
 import ca.on.hojat.mlkitdemo.still_image_cv.StillImageActivity
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,11 +45,13 @@ class MainActivity : AppCompatActivity() {
                             Intent(applicationContext, LivePreviewActivity::class.java)
                         startActivity(intent)
                     }
+
                     1 -> {
                         // go to StillImageActivity
                         val intent = Intent(applicationContext, StillImageActivity::class.java)
                         startActivity(intent)
                     }
+
                     2 -> {
                         // live camera translator
                         val intent = Intent(
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                         )
                         startActivity(intent)
                     }
+
                     3 -> {
                         val intent = Intent(applicationContext, DigitalInkMainActivity::class.java)
                         startActivity(intent)

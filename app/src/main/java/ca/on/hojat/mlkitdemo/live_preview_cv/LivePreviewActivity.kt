@@ -1,6 +1,5 @@
 package ca.on.hojat.mlkitdemo.live_preview_cv
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,7 +29,6 @@ import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
 import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
 import ca.on.hojat.mlkitdemo.databinding.ActivityVisionCameraxLivePreviewBinding
-import ca.on.hojat.mlkitdemo.settings.SettingsActivity
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.MlKitException
 import com.google.mlkit.common.model.LocalModel
@@ -105,17 +103,6 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
         ) { provider: ProcessCameraProvider? ->
             cameraProvider = provider
             bindAllCameraUseCases()
-        }
-
-
-
-        binding.settingsButton?.ivSettings?.setOnClickListener {
-            val intent = Intent(applicationContext, SettingsActivity::class.java)
-            intent.putExtra(
-                SettingsActivity.EXTRA_LAUNCH_SOURCE,
-                SettingsActivity.LaunchSource.CAMERAX_LIVE_PREVIEW
-            )
-            startActivity(intent)
         }
     }
 
@@ -231,6 +218,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         PreferenceUtils.getObjectDetectorOptionsForLivePreview(this)
                     ObjectDetectorProcessor(this, objectDetectorOptions)
                 }
+
                 OBJECT_DETECTION_CUSTOM -> {
                     Log.i(TAG, "Using Custom Object Detector (with object labeler) Processor")
                     val localModel =
@@ -242,6 +230,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         )
                     ObjectDetectorProcessor(this, customObjectDetectorOptions)
                 }
+
                 CUSTOM_AUTOML_OBJECT_DETECTION -> {
                     Log.i(TAG, "Using Custom AutoML Object Detector Processor")
                     val customAutoMLODTLocalModel =
@@ -253,10 +242,12 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         )
                     ObjectDetectorProcessor(this, customAutoMLODTOptions)
                 }
+
                 TEXT_RECOGNITION_LATIN -> {
                     Log.i(TAG, "Using on-device Text recognition Processor for Latin")
                     TextRecognitionProcessor(this, TextRecognizerOptions.Builder().build())
                 }
+
                 TEXT_RECOGNITION_CHINESE -> {
                     Log.i(
                         TAG, "Using on-device Text recognition Processor for Latin and Chinese"
@@ -265,6 +256,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         this, ChineseTextRecognizerOptions.Builder().build()
                     )
                 }
+
                 TEXT_RECOGNITION_DEVANAGARI -> {
                     Log.i(
                         TAG, "Using on-device Text recognition Processor for Latin and Devanagari"
@@ -273,6 +265,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         this, DevanagariTextRecognizerOptions.Builder().build()
                     )
                 }
+
                 TEXT_RECOGNITION_JAPANESE -> {
                     Log.i(
                         TAG, "Using on-device Text recognition Processor for Latin and Japanese"
@@ -281,6 +274,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         this, JapaneseTextRecognizerOptions.Builder().build()
                     )
                 }
+
                 TEXT_RECOGNITION_KOREAN -> {
                     Log.i(
                         TAG, "Using on-device Text recognition Processor for Latin and Korean"
@@ -289,19 +283,23 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         this, KoreanTextRecognizerOptions.Builder().build()
                     )
                 }
+
                 FACE_DETECTION -> {
                     Log.i(TAG, "Using Face Detector Processor")
                     val faceDetectorOptions = PreferenceUtils.getFaceDetectorOptions(this)
                     FaceDetectorProcessor(this, faceDetectorOptions)
                 }
+
                 BARCODE_SCANNING -> {
                     Log.i(TAG, "Using Barcode Detector Processor")
                     BarcodeScannerProcessor(this)
                 }
+
                 IMAGE_LABELING -> {
                     Log.i(TAG, "Using Image Label Detector Processor")
                     LabelDetectorProcessor(this, ImageLabelerOptions.DEFAULT_OPTIONS)
                 }
+
                 IMAGE_LABELING_CUSTOM -> {
                     Log.i(TAG, "Using Custom Image Label (Birds) Detector Processor")
                     val localClassifier = LocalModel.Builder()
@@ -310,6 +308,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         CustomImageLabelerOptions.Builder(localClassifier).build()
                     LabelDetectorProcessor(this, customImageLabelerOptions)
                 }
+
                 CUSTOM_AUTOML_LABELING -> {
                     Log.i(TAG, "Using Custom AutoML Image Label Detector Processor")
                     val customAutoMLLabelLocalModel =
@@ -320,6 +319,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                             .setConfidenceThreshold(0f).build()
                     LabelDetectorProcessor(this, customAutoMLLabelOptions)
                 }
+
                 POSE_DETECTION -> {
                     val poseDetectorOptions =
                         PreferenceUtils.getPoseDetectorOptionsForLivePreview(this)
@@ -340,6 +340,7 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
                         true
                     )
                 }
+
                 SELFIE_SEGMENTATION -> SegmenterProcessor(this)
                 FACE_MESH_DETECTION -> FaceMeshDetectorProcessor(this)
                 else -> throw IllegalStateException("Invalid model name")
