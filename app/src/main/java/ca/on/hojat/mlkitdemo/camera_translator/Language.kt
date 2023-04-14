@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.livecameratranslator
+package ca.on.hojat.mlkitdemo.camera_translator
 
 import java.util.Locale
 

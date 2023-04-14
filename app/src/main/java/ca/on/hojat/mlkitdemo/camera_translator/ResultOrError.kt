@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.livecameratranslator
+package ca.on.hojat.mlkitdemo.camera_translator
 
 /**
  * Holds a result or some operation or the exception.

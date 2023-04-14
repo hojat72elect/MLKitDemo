@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.digitalinkrecognition
+package ca.on.hojat.mlkitdemo.digital_ink_recognition
 
 import android.util.Log
 import com.google.android.gms.tasks.Task

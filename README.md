@@ -1,6 +1,7 @@
 # `ML-Kit demo` Android app
 
-[ML-Kit](https://developers.google.com/ml-kit) is a free-to-use machine learning API for Android and iOS apps, focusing
+[ML-Kit](https://developers.google.com/ml-kit) is a free-to-use machine learning API for Android and
+iOS apps, focusing
 on <b>on-device</b> AI solutions.<br/>
 In this repo, I have made a demo of all the AI techniques I have performed with ML-Kit on Android.
 
@@ -122,6 +123,7 @@ https://user-images.githubusercontent.com/8706521/231075026-13e46bb5-c3b5-4e77-8
 
 ### Development:
 
-Please star and fork this repo, I will be maintaining it over time and will try to add more ML related library demos to
+Please star and fork this repo, I will be maintaining it over time and will try to add more ML
+related library demos to
 it.<br/>
 Feel free to open issues and point out the bugs and short-comings.

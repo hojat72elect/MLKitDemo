@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors
+package ca.on.hojat.mlkitdemo.live_preview_cv
 
 import android.content.Intent
 import android.os.Bundle
@@ -44,7 +44,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 /** Live preview demo app for ML Kit APIs using CameraX. */
 @KeepName
-class CameraXLivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
+class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
     CompoundButton.OnCheckedChangeListener {
 
     private lateinit var binding: ActivityVisionCameraxLivePreviewBinding
@@ -100,7 +100,7 @@ class CameraXLivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
         ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-        )[CameraXViewModel::class.java].processCameraProvider.observe(
+        )[LivePreviewViewModel::class.java].processCameraProvider.observe(
             this
         ) { provider: ProcessCameraProvider? ->
             cameraProvider = provider

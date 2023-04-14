@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.livecameratranslator
+package ca.on.hojat.mlkitdemo.camera_translator
 
 import android.Manifest
 import android.content.pm.PackageManager

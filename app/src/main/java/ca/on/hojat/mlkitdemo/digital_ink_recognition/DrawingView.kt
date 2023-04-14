@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.digitalinkrecognition
+package ca.on.hojat.mlkitdemo.digital_ink_recognition
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import ca.on.hojat.mlkitdemo.digitalinkrecognition.StrokeManager.ContentChangedListener
+import ca.on.hojat.mlkitdemo.digital_ink_recognition.StrokeManager.ContentChangedListener
 import com.google.mlkit.vision.digitalink.Ink
 import com.google.mlkit.vision.digitalink.Ink.Stroke
 
@@ -134,6 +134,7 @@ class DrawingView @JvmOverloads constructor(
                 drawCanvas.drawPath(currentStroke, currentStrokePaint)
                 currentStroke.reset()
             }
+
             else -> {
             }
         }

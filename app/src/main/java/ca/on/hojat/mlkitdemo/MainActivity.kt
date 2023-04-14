@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import ca.on.hojat.mlkitdemo.cameralivepreviewvisiondetectors.CameraXLivePreviewActivity
+import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
-import ca.on.hojat.mlkitdemo.digitalinkrecognition.DigitalInkMainActivity
-import ca.on.hojat.mlkitdemo.livecameratranslator.LiveCameraTranslatorActivity
+import ca.on.hojat.mlkitdemo.digital_ink_recognition.DigitalInkMainActivity
+import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity
 import ca.on.hojat.mlkitdemo.stillimagevisiondetector.StillImageActivity
 
 
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         // go to CameraXLivePreviewActivity
                         val intent =
-                            Intent(applicationContext, CameraXLivePreviewActivity::class.java)
+                            Intent(applicationContext, LivePreviewActivity::class.java)
                         startActivity(intent)
                     }
                     1 -> {

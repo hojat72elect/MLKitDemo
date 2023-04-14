@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".cameralivepreviewvisiondetectors.CameraXLivePreviewActivity"
+            android:name=".live_preview_cv.LivePreviewActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 
@@ -54,12 +54,12 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".livecameratranslator.LiveCameraTranslatorActivity"
+            android:name=".camera_translator.LiveCameraTranslatorActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".digitalinkrecognition.DigitalInkMainActivity"
+            android:name=".digital_ink_recognition.DigitalInkMainActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 

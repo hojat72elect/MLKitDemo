@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.digitalinkrecognition
+package ca.on.hojat.mlkitdemo.digital_ink_recognition
 
 import android.os.Handler
 import android.os.Message
@@ -8,7 +8,7 @@ import androidx.annotation.VisibleForTesting
 import com.google.android.gms.tasks.SuccessContinuation
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
-import ca.on.hojat.mlkitdemo.digitalinkrecognition.RecognitionTask.RecognizedInk
+import ca.on.hojat.mlkitdemo.digital_ink_recognition.RecognitionTask.RecognizedInk
 import com.google.mlkit.vision.digitalink.Ink
 import com.google.mlkit.vision.digitalink.Ink.Stroke
 
