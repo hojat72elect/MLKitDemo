@@ -1,13 +1,23 @@
 package ca.on.hojat.mlkitdemo.common.posedetector.classification;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseEmbedding.getPoseEmbedding;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.maxAbs;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiply;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiplyAll;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.subtract;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.sumAbs;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-import static ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseEmbedding.getPoseEmbedding;
+
+import android.util.Pair;
+
+import com.google.mlkit.vision.common.PointF3D;
+import com.google.mlkit.vision.pose.Pose;
+import com.google.mlkit.vision.pose.PoseLandmark;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Classifies {link Pose} based on given {@link PoseSample}s.
@@ -19,27 +29,27 @@ public class PoseClassifier {
     private static final int MAX_DISTANCE_TOP_K = 30;
     private static final int MEAN_DISTANCE_TOP_K = 10;
     // Note Z has a lower weight as it is generally less accurate than X & Y.
-    private static final com.google.mlkit.vision.common.PointF3D AXES_WEIGHTS = com.google.mlkit.vision.common.PointF3D.from(1, 1, 0.2f);
+    private static final PointF3D AXES_WEIGHTS = PointF3D.from(1, 1, 0.2f);
 
-    private final java.util.List<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample> poseSamples;
+    private final List<PoseSample> poseSamples;
     private final int maxDistanceTopK;
     private final int meanDistanceTopK;
-    private final com.google.mlkit.vision.common.PointF3D axesWeights;
+    private final PointF3D axesWeights;
 
-    public PoseClassifier(java.util.List<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample> poseSamples) {
+    public PoseClassifier(List<PoseSample> poseSamples) {
         this(poseSamples, MAX_DISTANCE_TOP_K, MEAN_DISTANCE_TOP_K, AXES_WEIGHTS);
     }
 
-    public PoseClassifier(java.util.List<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample> poseSamples, int maxDistanceTopK, int meanDistanceTopK, com.google.mlkit.vision.common.PointF3D axesWeights) {
+    public PoseClassifier(List<PoseSample> poseSamples, int maxDistanceTopK, int meanDistanceTopK, PointF3D axesWeights) {
         this.poseSamples = poseSamples;
         this.maxDistanceTopK = maxDistanceTopK;
         this.meanDistanceTopK = meanDistanceTopK;
         this.axesWeights = axesWeights;
     }
 
-    private static java.util.List<com.google.mlkit.vision.common.PointF3D> extractPoseLandmarks(com.google.mlkit.vision.pose.Pose pose) {
-        java.util.List<com.google.mlkit.vision.common.PointF3D> landmarks = new java.util.ArrayList<>();
-        for (com.google.mlkit.vision.pose.PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
+    private static List<PointF3D> extractPoseLandmarks(Pose pose) {
+        List<PointF3D> landmarks = new ArrayList<>();
+        for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
             landmarks.add(poseLandmark.getPosition3D());
         }
         return landmarks;
@@ -55,23 +65,23 @@ public class PoseClassifier {
         return min(maxDistanceTopK, meanDistanceTopK);
     }
 
-    public ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult classify(com.google.mlkit.vision.pose.Pose pose) {
+    public ClassificationResult classify(Pose pose) {
         return classify(extractPoseLandmarks(pose));
     }
 
-    public ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult classify(java.util.List<com.google.mlkit.vision.common.PointF3D> landmarks) {
-        ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult result = new ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult();
+    public ClassificationResult classify(List<PointF3D> landmarks) {
+        ClassificationResult result = new ClassificationResult();
         // Return early if no landmarks detected.
         if (landmarks.isEmpty()) {
             return result;
         }
 
         // We do flipping on X-axis so we are horizontal (mirror) invariant.
-        java.util.List<com.google.mlkit.vision.common.PointF3D> flippedLandmarks = new java.util.ArrayList<>(landmarks);
-        multiplyAll(flippedLandmarks, com.google.mlkit.vision.common.PointF3D.from(-1, 1, 1));
+        List<PointF3D> flippedLandmarks = new ArrayList<>(landmarks);
+        multiplyAll(flippedLandmarks, PointF3D.from(-1, 1, 1));
 
-        java.util.List<com.google.mlkit.vision.common.PointF3D> embedding = getPoseEmbedding(landmarks);
-        java.util.List<com.google.mlkit.vision.common.PointF3D> flippedEmbedding = getPoseEmbedding(flippedLandmarks);
+        List<PointF3D> embedding = getPoseEmbedding(landmarks);
+        List<PointF3D> flippedEmbedding = getPoseEmbedding(flippedLandmarks);
 
 
         // Classification is done in two stages:
@@ -81,10 +91,10 @@ public class PoseClassifier {
         //    that are closest by average.
 
         // Keeps max distance on top so we can pop it when top_k size is reached.
-        java.util.PriorityQueue<android.util.Pair<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample, Float>> maxDistances = new java.util.PriorityQueue<>(maxDistanceTopK, (o1, o2) -> -Float.compare(o1.second, o2.second));
+        PriorityQueue<Pair<PoseSample, Float>> maxDistances = new PriorityQueue<>(maxDistanceTopK, (o1, o2) -> -Float.compare(o1.second, o2.second));
         // Retrieve top K poseSamples by least distance to remove outliers.
-        for (ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample poseSample : poseSamples) {
-            java.util.List<com.google.mlkit.vision.common.PointF3D> sampleEmbedding = poseSample.getEmbedding();
+        for (PoseSample poseSample : poseSamples) {
+            List<PointF3D> sampleEmbedding = poseSample.getEmbedding();
 
             float originalMax = 0;
             float flippedMax = 0;
@@ -93,7 +103,7 @@ public class PoseClassifier {
                 flippedMax = max(flippedMax, maxAbs(multiply(subtract(flippedEmbedding.get(i), sampleEmbedding.get(i)), axesWeights)));
             }
             // Set the max distance as min of original and flipped max distance.
-            maxDistances.add(new android.util.Pair<>(poseSample, min(originalMax, flippedMax)));
+            maxDistances.add(new Pair<>(poseSample, min(originalMax, flippedMax)));
             // We only want to retain top n so pop the highest distance.
             if (maxDistances.size() > maxDistanceTopK) {
                 maxDistances.poll();
@@ -101,11 +111,11 @@ public class PoseClassifier {
         }
 
         // Keeps higher mean distances on top so we can pop it when top_k size is reached.
-        java.util.PriorityQueue<android.util.Pair<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample, Float>> meanDistances = new java.util.PriorityQueue<>(meanDistanceTopK, (o1, o2) -> -Float.compare(o1.second, o2.second));
-        // Retrive top K poseSamples by least mean distance to remove outliers.
-        for (android.util.Pair<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample, Float> sampleDistances : maxDistances) {
-            ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample poseSample = sampleDistances.first;
-            java.util.List<com.google.mlkit.vision.common.PointF3D> sampleEmbedding = poseSample.getEmbedding();
+        PriorityQueue<Pair<PoseSample, Float>> meanDistances = new PriorityQueue<>(meanDistanceTopK, (o1, o2) -> -Float.compare(o1.second, o2.second));
+        // Retrieve top K poseSamples by least mean distance to remove outliers.
+        for (Pair<PoseSample, Float> sampleDistances : maxDistances) {
+            PoseSample poseSample = sampleDistances.first;
+            List<PointF3D> sampleEmbedding = poseSample.getEmbedding();
 
             float originalSum = 0;
             float flippedSum = 0;
@@ -115,14 +125,14 @@ public class PoseClassifier {
             }
             // Set the mean distance as min of original and flipped mean distances.
             float meanDistance = min(originalSum, flippedSum) / (embedding.size() * 2);
-            meanDistances.add(new android.util.Pair<>(poseSample, meanDistance));
+            meanDistances.add(new Pair<>(poseSample, meanDistance));
             // We only want to retain top k so pop the highest mean distance.
             if (meanDistances.size() > meanDistanceTopK) {
                 meanDistances.poll();
             }
         }
 
-        for (android.util.Pair<ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseSample, Float> sampleDistances : meanDistances) {
+        for (Pair<PoseSample, Float> sampleDistances : meanDistances) {
             String className = sampleDistances.first.getClassName();
             result.incrementClassConfidence(className);
         }
