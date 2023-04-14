@@ -1,5 +1,12 @@
 package ca.on.hojat.mlkitdemo.common.posedetector.classification;
 
+import android.os.SystemClock;
+
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * Runs EMA smoothing over a window with given stream of pose classification results.
  */
@@ -13,7 +20,7 @@ public class EMASmoothing {
     private final float alpha;
     // This is a window of {@link ClassificationResult}s as outputted by the {@link PoseClassifier}.
     // We run smoothing over this window of size {@link windowSize}.
-    private final java.util.Deque<ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult> window;
+    private final Deque<ClassificationResult> window;
 
     private long lastInputMs;
 
@@ -24,12 +31,12 @@ public class EMASmoothing {
     public EMASmoothing(int windowSize, float alpha) {
         this.windowSize = windowSize;
         this.alpha = alpha;
-        this.window = new java.util.concurrent.LinkedBlockingDeque<>(windowSize);
+        this.window = new LinkedBlockingDeque<>(windowSize);
     }
 
-    public ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult getSmoothedResult(ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult classificationResult) {
+    public ClassificationResult getSmoothedResult(ClassificationResult classificationResult) {
         // Resets memory if the input is too far away from the previous one in time.
-        long nowMs = android.os.SystemClock.elapsedRealtime();
+        long nowMs = SystemClock.elapsedRealtime();
         if (nowMs - lastInputMs > RESET_THRESHOLD_MS) {
             window.clear();
         }
@@ -42,18 +49,18 @@ public class EMASmoothing {
         // Insert at the beginning of the window.
         window.addFirst(classificationResult);
 
-        java.util.Set<String> allClasses = new java.util.HashSet<>();
-        for (ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult result : window) {
+        Set<String> allClasses = new HashSet<>();
+        for (ClassificationResult result : window) {
             allClasses.addAll(result.getAllClasses());
         }
 
-        ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult smoothedResult = new ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult();
+        ClassificationResult smoothedResult = new ClassificationResult();
 
         for (String className : allClasses) {
             float factor = 1;
             float topSum = 0;
             float bottomSum = 0;
-            for (ca.on.hojat.mlkitdemo.common.posedetector.classification.ClassificationResult result : window) {
+            for (ClassificationResult result : window) {
                 float value = result.getClassConfidence(className);
 
                 topSum += factor * value;
