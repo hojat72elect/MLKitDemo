@@ -9,7 +9,7 @@ import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
 import ca.on.hojat.mlkitdemo.digital_ink_recognition.DigitalInkMainActivity
 import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity
-import ca.on.hojat.mlkitdemo.stillimagevisiondetector.StillImageActivity
+import ca.on.hojat.mlkitdemo.still_image_cv.StillImageActivity
 
 
 class MainActivity : AppCompatActivity() {

@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".stillimagevisiondetector.StillImageActivity"
+            android:name=".still_image_cv.StillImageActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 

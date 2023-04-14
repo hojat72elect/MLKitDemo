@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.stillimagevisiondetector
+package ca.on.hojat.mlkitdemo.still_image_cv
 
 import android.app.Activity
 import android.content.ContentValues
@@ -34,7 +34,6 @@ import ca.on.hojat.mlkitdemo.common.posedetector.PoseDetectorProcessor
 import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
 import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
-import ca.on.hojat.mlkitdemo.settings.SettingsActivity
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions
@@ -120,20 +119,6 @@ class StillImageActivity : AppCompatActivity() {
                     }
                 }
             })
-
-        val settingsButton = findViewById<ImageView>(R.id.settings_button)
-        settingsButton.setOnClickListener {
-            val intent =
-                Intent(
-                    applicationContext,
-                    SettingsActivity::class.java
-                )
-            intent.putExtra(
-                SettingsActivity.EXTRA_LAUNCH_SOURCE,
-                SettingsActivity.LaunchSource.STILL_IMAGE
-            )
-            startActivity(intent)
-        }
     }
 
     public override fun onResume() {
@@ -367,14 +352,17 @@ class StillImageActivity : AppCompatActivity() {
                     targetWidth = imageMaxWidth
                     targetHeight = imageMaxHeight
                 }
+
                 SIZE_640_480 -> {
                     targetWidth = if (isLandScape) 640 else 480
                     targetHeight = if (isLandScape) 480 else 640
                 }
+
                 SIZE_1024_768 -> {
                     targetWidth = if (isLandScape) 1024 else 768
                     targetHeight = if (isLandScape) 768 else 1024
                 }
+
                 else -> throw IllegalStateException("Unknown size")
             }
             return Pair(targetWidth, targetHeight)
@@ -396,6 +384,7 @@ class StillImageActivity : AppCompatActivity() {
                             objectDetectorOptions
                         )
                 }
+
                 OBJECT_DETECTION_CUSTOM -> {
                     Log.i(
                         TAG,
@@ -415,6 +404,7 @@ class StillImageActivity : AppCompatActivity() {
                             customObjectDetectorOptions
                         )
                 }
+
                 CUSTOM_AUTOML_OBJECT_DETECTION -> {
                     Log.i(
                         TAG,
@@ -434,6 +424,7 @@ class StillImageActivity : AppCompatActivity() {
                             customAutoMLODTOptions
                         )
                 }
+
                 FACE_DETECTION -> {
                     Log.i(TAG, "Using Face Detector Processor")
                     val faceDetectorOptions =
@@ -441,42 +432,50 @@ class StillImageActivity : AppCompatActivity() {
                     imageProcessor =
                         FaceDetectorProcessor(this, faceDetectorOptions)
                 }
+
                 BARCODE_SCANNING ->
                     imageProcessor =
                         BarcodeScannerProcessor(this)
+
                 TEXT_RECOGNITION_LATIN ->
                     imageProcessor =
                         TextRecognitionProcessor(this, TextRecognizerOptions.Builder().build())
+
                 TEXT_RECOGNITION_CHINESE ->
                     imageProcessor =
                         TextRecognitionProcessor(
                             this,
                             ChineseTextRecognizerOptions.Builder().build()
                         )
+
                 TEXT_RECOGNITION_DEVANAGARI ->
                     imageProcessor =
                         TextRecognitionProcessor(
                             this,
                             DevanagariTextRecognizerOptions.Builder().build()
                         )
+
                 TEXT_RECOGNITION_JAPANESE ->
                     imageProcessor =
                         TextRecognitionProcessor(
                             this,
                             JapaneseTextRecognizerOptions.Builder().build()
                         )
+
                 TEXT_RECOGNITION_KOREAN ->
                     imageProcessor =
                         TextRecognitionProcessor(
                             this,
                             KoreanTextRecognizerOptions.Builder().build()
                         )
+
                 IMAGE_LABELING ->
                     imageProcessor =
                         LabelDetectorProcessor(
                             this,
                             ImageLabelerOptions.DEFAULT_OPTIONS
                         )
+
                 IMAGE_LABELING_CUSTOM -> {
                     Log.i(
                         TAG,
@@ -493,6 +492,7 @@ class StillImageActivity : AppCompatActivity() {
                             customImageLabelerOptions
                         )
                 }
+
                 CUSTOM_AUTOML_LABELING -> {
                     Log.i(
                         TAG,
@@ -511,6 +511,7 @@ class StillImageActivity : AppCompatActivity() {
                             customAutoMLLabelOptions
                         )
                 }
+
                 POSE_DETECTION -> {
                     val poseDetectorOptions =
                         PreferenceUtils.getPoseDetectorOptionsForStillImage(this)
@@ -532,12 +533,15 @@ class StillImageActivity : AppCompatActivity() {
                             isStreamMode = false
                         )
                 }
+
                 SELFIE_SEGMENTATION -> {
                     imageProcessor = SegmenterProcessor(this, isStreamMode = false)
                 }
+
                 FACE_MESH_DETECTION -> {
                     imageProcessor = FaceMeshDetectorProcessor(this)
                 }
+
                 else -> Log.e(
                     TAG,
                     "Unknown selectedMode: $selectedMode"
