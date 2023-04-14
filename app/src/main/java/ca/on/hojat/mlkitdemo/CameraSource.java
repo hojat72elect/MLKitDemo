@@ -2,6 +2,7 @@ package ca.on.hojat.mlkitdemo;
 
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -11,10 +12,13 @@ import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import ca.on.hojat.mlkitdemo.common.FrameMetadata;
@@ -63,9 +67,9 @@ public class CameraSource {
      * equals, hashCode and toString methods is both useless and unexpected. IdentityHashMap enforces
      * identity ('==') check on the keys.
      */
-    private final java.util.IdentityHashMap<byte[], java.nio.ByteBuffer> bytesToByteBuffer = new java.util.IdentityHashMap<>();
-    protected android.app.Activity activity;
-    private android.hardware.Camera camera;
+    private final IdentityHashMap<byte[], ByteBuffer> bytesToByteBuffer = new IdentityHashMap<>();
+    protected Activity activity;
+    private Camera camera;
     private int facing = CAMERA_FACING_BACK;
     /**
      * Rotation of the device, and thus the associated preview images captured from the device.
@@ -421,7 +425,7 @@ public class CameraSource {
         // one thread for acquiring images, and another thread for calling into user code.  If only
         // three buffers are used, then the camera will spew thousands of warning messages when
         // detection takes a non-trivial amount of time.
-        camera.setPreviewCallbackWithBuffer(new ca.on.hojat.mlkitdemo.CameraSource.CameraPreviewCallback());
+        camera.setPreviewCallbackWithBuffer(new CameraPreviewCallback());
         camera.addCallbackBuffer(createPreviewBuffer(previewSize));
         camera.addCallbackBuffer(createPreviewBuffer(previewSize));
         camera.addCallbackBuffer(createPreviewBuffer(previewSize));
@@ -457,22 +461,22 @@ public class CameraSource {
                 android.util.Log.e(TAG, "Bad rotation value: " + rotation);
         }
 
-        android.hardware.Camera.CameraInfo cameraInfo = new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(cameraId, cameraInfo);
+        CameraInfo cameraInfo = new CameraInfo();
+        Camera.getCameraInfo(cameraId, cameraInfo);
 
         int displayAngle;
-        if (cameraInfo.facing == android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        if (cameraInfo.facing == CameraInfo.CAMERA_FACING_FRONT) {
             this.rotationDegrees = (cameraInfo.orientation + degrees) % 360;
             displayAngle = (360 - this.rotationDegrees) % 360; // compensate for it being mirrored
         } else { // back-facing
             this.rotationDegrees = (cameraInfo.orientation - degrees + 360) % 360;
             displayAngle = this.rotationDegrees;
         }
-        android.util.Log.d(TAG, "Display rotation is: " + rotation);
-        android.util.Log.d(TAG, "Camera face is: " + cameraInfo.facing);
-        android.util.Log.d(TAG, "Camera rotation is: " + cameraInfo.orientation);
+        Log.d(TAG, "Display rotation is: " + rotation);
+        Log.d(TAG, "Camera face is: " + cameraInfo.facing);
+        Log.d(TAG, "Camera rotation is: " + cameraInfo.orientation);
         // This value should be one of the degrees that ImageMetadata accepts: 0, 90, 180 or 270.
-        android.util.Log.d(TAG, "RotationDegrees is: " + this.rotationDegrees);
+        Log.d(TAG, "RotationDegrees is: " + this.rotationDegrees);
 
         camera.setDisplayOrientation(displayAngle);
         parameters.setRotation(this.rotationDegrees);
@@ -484,16 +488,16 @@ public class CameraSource {
      *
      * @return a new preview buffer of the appropriate size for the current camera settings
      */
-    @android.annotation.SuppressLint("InlinedApi")
+    @SuppressLint("InlinedApi")
     private byte[] createPreviewBuffer(com.google.android.gms.common.images.Size previewSize) {
-        int bitsPerPixel = android.graphics.ImageFormat.getBitsPerPixel(IMAGE_FORMAT);
+        int bitsPerPixel = ImageFormat.getBitsPerPixel(IMAGE_FORMAT);
         long sizeInBits = (long) previewSize.getHeight() * previewSize.getWidth() * bitsPerPixel;
         int bufferSize = (int) Math.ceil(sizeInBits / 8.0d) + 1;
 
         // Creating the byte array this way and wrapping it, as opposed to using .allocate(),
         // should guarantee that there will be an array to work with.
         byte[] byteArray = new byte[bufferSize];
-        java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(byteArray);
+        ByteBuffer buffer = ByteBuffer.wrap(byteArray);
         if (!buffer.hasArray() || (buffer.array() != byteArray)) {
             // I don't think that this will ever happen.  But if it does, then we wouldn't be
             // passing the preview content to the underlying detector later.
@@ -514,9 +518,9 @@ public class CameraSource {
         }
     }
 
-    // ==============================================================================================
+    //
     // Frame processing
-    // ==============================================================================================
+    //
 
     /**
      * Cleans up graphicOverlay and child classes can do their cleanups as well .
@@ -533,15 +537,15 @@ public class CameraSource {
      */
     public static class SizePair {
         public final com.google.android.gms.common.images.Size preview;
-        @androidx.annotation.Nullable
+        @Nullable
         public final com.google.android.gms.common.images.Size picture;
 
-        SizePair(android.hardware.Camera.Size previewSize, @androidx.annotation.Nullable android.hardware.Camera.Size pictureSize) {
+        SizePair(Size previewSize, @Nullable Size pictureSize) {
             preview = new com.google.android.gms.common.images.Size(previewSize.width, previewSize.height);
             picture = pictureSize != null ? new com.google.android.gms.common.images.Size(pictureSize.width, pictureSize.height) : null;
         }
 
-        public SizePair(com.google.android.gms.common.images.Size previewSize, @androidx.annotation.Nullable com.google.android.gms.common.images.Size pictureSize) {
+        public SizePair(com.google.android.gms.common.images.Size previewSize, @Nullable com.google.android.gms.common.images.Size pictureSize) {
             preview = previewSize;
             picture = pictureSize;
         }
@@ -550,9 +554,9 @@ public class CameraSource {
     /**
      * Called when the camera has a new preview frame.
      */
-    private class CameraPreviewCallback implements android.hardware.Camera.PreviewCallback {
+    private class CameraPreviewCallback implements Camera.PreviewCallback {
         @Override
-        public void onPreviewFrame(byte[] data, android.hardware.Camera camera) {
+        public void onPreviewFrame(byte[] data, Camera camera) {
             processingRunnable.setNextFrame(data, camera);
         }
     }
@@ -574,7 +578,7 @@ public class CameraSource {
         private boolean active = true;
 
         // These pending variables hold the state associated with the new frame awaiting processing.
-        private java.nio.ByteBuffer pendingFrameData;
+        private ByteBuffer pendingFrameData;
 
         FrameProcessingRunnable() {
         }
@@ -594,7 +598,7 @@ public class CameraSource {
          * present) back to the camera, and keeps a pending reference to the frame data for future use.
          */
         @SuppressWarnings("ByteBufferBackingArray")
-        void setNextFrame(byte[] data, android.hardware.Camera camera) {
+        void setNextFrame(byte[] data, Camera camera) {
             synchronized (lock) {
                 if (pendingFrameData != null) {
                     camera.addCallbackBuffer(pendingFrameData.array());
@@ -602,7 +606,7 @@ public class CameraSource {
                 }
 
                 if (!bytesToByteBuffer.containsKey(data)) {
-                    android.util.Log.d(
+                    Log.d(
                             TAG,
                             "Skipping frame. Could not find ByteBuffer associated with the image "
                                     + "data from the camera.");
@@ -629,11 +633,11 @@ public class CameraSource {
          * <p>If you find that this is using more CPU than you'd like, you should probably decrease the
          * FPS setting above to allow for some idle time in between frames.
          */
-        @android.annotation.SuppressLint("InlinedApi")
+        @SuppressLint("InlinedApi")
         @SuppressWarnings({"GuardedBy", "ByteBufferBackingArray"})
         @Override
         public void run() {
-            java.nio.ByteBuffer data;
+            ByteBuffer data;
 
             while (true) {
                 synchronized (lock) {
@@ -643,7 +647,7 @@ public class CameraSource {
                             // don't have it yet.
                             lock.wait();
                         } catch (InterruptedException e) {
-                            android.util.Log.d(TAG, "Frame processing loop terminated.", e);
+                            Log.d(TAG, "Frame processing loop terminated.", e);
                             return;
                         }
                     }
@@ -679,7 +683,7 @@ public class CameraSource {
                                 graphicOverlay);
                     }
                 } catch (Exception t) {
-                    android.util.Log.e(TAG, "Exception thrown from receiver.", t);
+                    Log.e(TAG, "Exception thrown from receiver.", t);
                 } finally {
                     camera.addCallbackBuffer(data.array());
                 }
