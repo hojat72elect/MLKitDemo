@@ -1,6 +1,27 @@
 package ca.on.hojat.mlkitdemo.common;
 
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.media.Image;
+import android.media.Image.Plane;
+import android.net.Uri;
+import android.provider.MediaStore.Images.Media;
+import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.camera.core.ExperimentalGetImage;
+import androidx.camera.core.ImageProxy;
+import androidx.exifinterface.media.ExifInterface;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 /**
  * Utils functions for bitmap conversions.
@@ -11,22 +32,22 @@ public class BitmapUtils {
     /**
      * Converts NV21 format byte buffer to bitmap.
      */
-    @androidx.annotation.Nullable
-    public static android.graphics.Bitmap getBitmap(java.nio.ByteBuffer data, FrameMetadata metadata) {
+    @Nullable
+    public static Bitmap getBitmap(ByteBuffer data, FrameMetadata metadata) {
         data.rewind();
         byte[] imageInBuffer = new byte[data.limit()];
         data.get(imageInBuffer, 0, imageInBuffer.length);
         try {
-            android.graphics.YuvImage image = new android.graphics.YuvImage(imageInBuffer, android.graphics.ImageFormat.NV21, metadata.getWidth(), metadata.getHeight(), null);
-            java.io.ByteArrayOutputStream stream = new java.io.ByteArrayOutputStream();
-            image.compressToJpeg(new android.graphics.Rect(0, 0, metadata.getWidth(), metadata.getHeight()), 80, stream);
+            YuvImage image = new YuvImage(imageInBuffer, ImageFormat.NV21, metadata.getWidth(), metadata.getHeight(), null);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            image.compressToJpeg(new Rect(0, 0, metadata.getWidth(), metadata.getHeight()), 80, stream);
 
-            android.graphics.Bitmap bmp = android.graphics.BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
+            Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
             stream.close();
             return rotateBitmap(bmp, metadata.getRotation(), false, false);
         } catch (Exception e) {
-            android.util.Log.e("VisionProcessorBase", "Error: " + e.getMessage());
+            Log.e("VisionProcessorBase", "Error: " + e.getMessage());
         }
         return null;
     }
@@ -34,27 +55,27 @@ public class BitmapUtils {
     /**
      * Converts a YUV_420_888 image from CameraX API to a bitmap.
      */
-    @androidx.annotation.Nullable
-    @androidx.camera.core.ExperimentalGetImage
-    public static android.graphics.Bitmap getBitmap(androidx.camera.core.ImageProxy image) {
+    @Nullable
+    @ExperimentalGetImage
+    public static Bitmap getBitmap(ImageProxy image) {
         FrameMetadata frameMetadata = new FrameMetadata.Builder().setWidth(image.getWidth()).setHeight(image.getHeight()).setRotation(image.getImageInfo().getRotationDegrees()).build();
 
-        java.nio.ByteBuffer nv21Buffer = yuv420ThreePlanesToNV21(image.getImage().getPlanes(), image.getWidth(), image.getHeight());
+        ByteBuffer nv21Buffer = yuv420ThreePlanesToNV21(java.util.Objects.requireNonNull(image.getImage()).getPlanes(), image.getWidth(), image.getHeight());
         return getBitmap(nv21Buffer, frameMetadata);
     }
 
     /**
      * Rotates a bitmap if it is converted from a bytebuffer.
      */
-    private static android.graphics.Bitmap rotateBitmap(android.graphics.Bitmap bitmap, int rotationDegrees, boolean flipX, boolean flipY) {
-        android.graphics.Matrix matrix = new android.graphics.Matrix();
+    private static Bitmap rotateBitmap(Bitmap bitmap, int rotationDegrees, boolean flipX, boolean flipY) {
+        Matrix matrix = new Matrix();
 
         // Rotate the image back to straight.
         matrix.postRotate(rotationDegrees);
 
         // Mirror the image along the X or Y axis.
         matrix.postScale(flipX ? -1.0f : 1.0f, flipY ? -1.0f : 1.0f);
-        android.graphics.Bitmap rotatedBitmap = android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         // Recycle the old bitmap if it has changed.
         if (rotatedBitmap != bitmap) {
@@ -63,9 +84,9 @@ public class BitmapUtils {
         return rotatedBitmap;
     }
 
-    @androidx.annotation.Nullable
-    public static android.graphics.Bitmap getBitmapFromContentUri(android.content.ContentResolver contentResolver, android.net.Uri imageUri) throws java.io.IOException {
-        android.graphics.Bitmap decodedBitmap = android.provider.MediaStore.Images.Media.getBitmap(contentResolver, imageUri);
+    @Nullable
+    public static Bitmap getBitmapFromContentUri(ContentResolver contentResolver, Uri imageUri) throws IOException {
+        Bitmap decodedBitmap = Media.getBitmap(contentResolver, imageUri);
         if (decodedBitmap == null) {
             return null;
         }
@@ -77,31 +98,31 @@ public class BitmapUtils {
         // See e.g. https://magnushoff.com/articles/jpeg-orientation/ for a detailed explanation on each
         // orientation.
         switch (orientation) {
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
                 flipX = true;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_90:
+            case ExifInterface.ORIENTATION_ROTATE_90:
                 rotationDegrees = 90;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_TRANSPOSE:
+            case ExifInterface.ORIENTATION_TRANSPOSE:
                 rotationDegrees = 90;
                 flipX = true;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_180:
+            case ExifInterface.ORIENTATION_ROTATE_180:
                 rotationDegrees = 180;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_FLIP_VERTICAL:
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
                 flipY = true;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_270:
+            case ExifInterface.ORIENTATION_ROTATE_270:
                 rotationDegrees = -90;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_TRANSVERSE:
+            case ExifInterface.ORIENTATION_TRANSVERSE:
                 rotationDegrees = -90;
                 flipX = true;
                 break;
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_UNDEFINED:
-            case androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL:
+            case ExifInterface.ORIENTATION_UNDEFINED:
+            case ExifInterface.ORIENTATION_NORMAL:
             default:
                 // No transformations necessary in this case.
         }
@@ -109,27 +130,27 @@ public class BitmapUtils {
         return rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
     }
 
-    private static int getExifOrientationTag(android.content.ContentResolver resolver, android.net.Uri imageUri) {
+    private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
         // We only support parsing EXIF orientation tag from local file on the device.
         // See also:
         // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
-        if (!android.content.ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme()) && !android.content.ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
+        if (!ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme()) && !ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
             return 0;
         }
 
-        androidx.exifinterface.media.ExifInterface exif;
-        try (java.io.InputStream inputStream = resolver.openInputStream(imageUri)) {
+        ExifInterface exif;
+        try (InputStream inputStream = resolver.openInputStream(imageUri)) {
             if (inputStream == null) {
                 return 0;
             }
 
-            exif = new androidx.exifinterface.media.ExifInterface(inputStream);
-        } catch (java.io.IOException e) {
-            android.util.Log.e(TAG, "failed to open file to read rotation meta data: " + imageUri, e);
+            exif = new ExifInterface(inputStream);
+        } catch (IOException e) {
+            Log.e(TAG, "failed to open file to read rotation meta data: " + imageUri, e);
             return 0;
         }
 
-        return exif.getAttributeInt(androidx.exifinterface.media.ExifInterface.TAG_ORIENTATION, androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL);
+        return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
     }
 
     /**
@@ -149,7 +170,7 @@ public class BitmapUtils {
      * before the U buffer and the planes have a pixelStride of 2. If this is case, we can just copy
      * them to the NV21 array.
      */
-    private static java.nio.ByteBuffer yuv420ThreePlanesToNV21(android.media.Image.Plane[] yuv420888planes, int width, int height) {
+    private static ByteBuffer yuv420ThreePlanesToNV21(Plane[] yuv420888planes, int width, int height) {
         int imageSize = width * height;
         byte[] out = new byte[imageSize + 2 * (imageSize / 4)];
 
@@ -173,17 +194,17 @@ public class BitmapUtils {
             unpackPlane(yuv420888planes[2], width, height, out, imageSize, 2);
         }
 
-        return java.nio.ByteBuffer.wrap(out);
+        return ByteBuffer.wrap(out);
     }
 
     /**
      * Checks if the UV plane buffers of a YUV_420_888 image are in the NV21 format.
      */
-    private static boolean areUVPlanesNV21(android.media.Image.Plane[] planes, int width, int height) {
+    private static boolean areUVPlanesNV21(Plane[] planes, int width, int height) {
         int imageSize = width * height;
 
-        java.nio.ByteBuffer uBuffer = planes[1].getBuffer();
-        java.nio.ByteBuffer vBuffer = planes[2].getBuffer();
+        ByteBuffer uBuffer = planes[1].getBuffer();
+        ByteBuffer vBuffer = planes[2].getBuffer();
 
         // Backup buffer properties.
         int vBufferPosition = vBuffer.position();
@@ -210,8 +231,8 @@ public class BitmapUtils {
      * <p>The input plane data will be copied in 'out', starting at 'offset' and every pixel will be
      * spaced by 'pixelStride'. Note that there is no row padding on the output.
      */
-    private static void unpackPlane(android.media.Image.Plane plane, int width, int height, byte[] out, int offset, int pixelStride) {
-        java.nio.ByteBuffer buffer = plane.getBuffer();
+    private static void unpackPlane(Plane plane, int width, int height, byte[] out, int offset, int pixelStride) {
+        ByteBuffer buffer = plane.getBuffer();
         buffer.rewind();
 
         // Compute the size of the current plane.
