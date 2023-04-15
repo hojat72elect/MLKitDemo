@@ -109,6 +109,7 @@ class PoseClassifierProcessor @WorkerThread constructor(
                     maxConfidenceClass!!
                 ) / poseClassifier!!.confidenceRange()
             )
+            result.add(maxConfidenceClassResult)
         }
 
         return result
