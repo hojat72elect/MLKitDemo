@@ -2,7 +2,6 @@ package ca.on.hojat.mlkitdemo.common.posedetector.classification;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseEmbedding.getPoseEmbedding;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.maxAbs;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiply;
 import static ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiplyAll;
@@ -80,8 +79,8 @@ public class PoseClassifier {
         List<PointF3D> flippedLandmarks = new ArrayList<>(landmarks);
         multiplyAll(flippedLandmarks, PointF3D.from(-1, 1, 1));
 
-        List<PointF3D> embedding = getPoseEmbedding(landmarks);
-        List<PointF3D> flippedEmbedding = getPoseEmbedding(flippedLandmarks);
+        List<PointF3D> embedding = PoseEmbedding.getPoseEmbedding(landmarks);
+        List<PointF3D> flippedEmbedding = PoseEmbedding.getPoseEmbedding(flippedLandmarks);
 
 
         // Classification is done in two stages:
