@@ -19,10 +19,13 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Classifies {link Pose} based on given {@link PoseSample}s.
- *
- * <p>Inspired by K-Nearest Neighbors Algorithm with outlier filtering.
- * <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">...</a>
+ * TODO: this class is really hard to be converted into kotlin;
+ * it should be the last class that gets converted.
+ * <p>
+ * Classifies [Pose] based on given [PoseSample]s.
+ * <p>
+ * Inspired by K-Nearest Neighbors Algorithm with outlier filtering.
+ * "<a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">...</a>"
  */
 public class PoseClassifier {
     private static final int MAX_DISTANCE_TOP_K = 30;
