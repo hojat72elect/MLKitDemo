@@ -15,8 +15,11 @@ import ca.on.hojat.mlkitdemo.common.FrameMetadata
 @ExperimentalGetImage
 fun ImageProxy.getBitmap(): Bitmap? {
 
-    val frameMetadata = FrameMetadata.Builder().setWidth(width).setHeight(height)
-        .setRotation(imageInfo.rotationDegrees).build()
+    val frameMetadata = FrameMetadata.Builder()
+        .setWidth(width)
+        .setHeight(height)
+        .setRotation(imageInfo.rotationDegrees)
+        .build()
 
     val nv21Buffer = yuv420ThreePlanesToNV21(image!!.planes, width, height)
     return getBitmap(nv21Buffer, frameMetadata)
