@@ -9,7 +9,6 @@ import android.graphics.YuvImage;
 import android.media.Image;
 import android.media.Image.Plane;
 import android.net.Uri;
-import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -29,6 +28,9 @@ public class BitmapUtils {
     private static final String TAG = "BitmapUtils";
 
     /**
+     * I have already converted this to a kotlin extension function but
+     * I don't know why, whenever I migrate to that file, will have a
+     * run-time error from ML-Kit.
      * Converts NV21 format byte buffer to bitmap.
      */
     @Nullable
@@ -51,53 +53,7 @@ public class BitmapUtils {
         return null;
     }
 
-    @Nullable
-    public static Bitmap getBitmapFromContentUri(ContentResolver contentResolver, Uri imageUri) throws IOException {
-        Bitmap decodedBitmap = Media.getBitmap(contentResolver, imageUri);
-        if (decodedBitmap == null) {
-            return null;
-        }
-        int orientation = getExifOrientationTag(contentResolver, imageUri);
-
-        int rotationDegrees = 0;
-        boolean flipX = false;
-        boolean flipY = false;
-        // See e.g. https://magnushoff.com/articles/jpeg-orientation/ for a detailed explanation on each
-        // orientation.
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                flipX = true;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                rotationDegrees = 90;
-                break;
-            case ExifInterface.ORIENTATION_TRANSPOSE:
-                rotationDegrees = 90;
-                flipX = true;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                rotationDegrees = 180;
-                break;
-            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                flipY = true;
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                rotationDegrees = -90;
-                break;
-            case ExifInterface.ORIENTATION_TRANSVERSE:
-                rotationDegrees = -90;
-                flipX = true;
-                break;
-            case ExifInterface.ORIENTATION_UNDEFINED:
-            case ExifInterface.ORIENTATION_NORMAL:
-            default:
-                // No transformations necessary in this case.
-        }
-
-        return BitmapKt.rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
-    }
-
-    private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
+    public static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
         // We only support parsing EXIF orientation tag from local file on the device.
         // See also:
         // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html

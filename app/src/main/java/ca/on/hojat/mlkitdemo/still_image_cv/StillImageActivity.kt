@@ -22,7 +22,6 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.R
-import ca.on.hojat.mlkitdemo.common.BitmapUtils
 import ca.on.hojat.mlkitdemo.common.GraphicOverlay
 import ca.on.hojat.mlkitdemo.common.VisionImageProcessor
 import ca.on.hojat.mlkitdemo.common.barcodescanner.BarcodeScannerProcessor
@@ -34,6 +33,7 @@ import ca.on.hojat.mlkitdemo.common.posedetector.PoseDetectorProcessor
 import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
 import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
+import ca.on.hojat.mlkitdemo.usecases.GetBitmapFromContentUriUseCase
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions
@@ -297,7 +297,7 @@ class StillImageActivity : AppCompatActivity() {
             }
 
             val imageBitmap =
-                BitmapUtils.getBitmapFromContentUri(contentResolver, imageUri) ?: return
+                GetBitmapFromContentUriUseCase(contentResolver, imageUri) ?: return
             // Clear the overlay first
             graphicOverlay!!.clear()
 

@@ -20,7 +20,7 @@ import java.nio.ByteBuffer
  * You just provide input in the form of [ByteBuffer] and also the configuration in form of
  * [FrameMetadata]. The output is a [Bitmap].
  */
-fun ByteBuffer.getBitmap(metadata: FrameMetadata): Bitmap {
+fun ByteBuffer.getBitmap(metadata: FrameMetadata): Bitmap? {
     try {
         rewind()
         val imageInBuffer = byteArrayOf(limit().toByte())
@@ -45,7 +45,6 @@ fun ByteBuffer.getBitmap(metadata: FrameMetadata): Bitmap {
         )
     } catch (e: Exception) {
         Log.e("VisionProcessorBase", "Error: ${e.message}")
-        throw (e)
     }
-//    return null
+    return null
 }
