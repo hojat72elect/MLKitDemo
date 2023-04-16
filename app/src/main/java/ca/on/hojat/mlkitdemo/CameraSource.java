@@ -3,6 +3,7 @@ package ca.on.hojat.mlkitdemo;
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -10,7 +11,9 @@ import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
@@ -87,16 +90,16 @@ public class CameraSource {
     private Thread processingThread;
     private ca.on.hojat.mlkitdemo.common.VisionImageProcessor frameProcessor;
 
-    public CameraSource(android.app.Activity activity, ca.on.hojat.mlkitdemo.common.GraphicOverlay overlay) {
+    public CameraSource(Activity activity, GraphicOverlay overlay) {
         this.activity = activity;
         graphicOverlay = overlay;
         graphicOverlay.clear();
-        processingRunnable = new ca.on.hojat.mlkitdemo.CameraSource.FrameProcessingRunnable();
+        processingRunnable = new FrameProcessingRunnable();
     }
 
-    // ==============================================================================================
+    //
     // Public
-    // ==============================================================================================
+    //
 
     /**
      * Gets the id for the camera specified by the direction it is facing. Returns -1 if no such
@@ -135,9 +138,9 @@ public class CameraSource {
         // the desired values and the actual values for width and height.  This is certainly not the
         // only way to select the best size, but it provides a decent tradeoff between using the
         // closest aspect ratio vs. using the closest pixel area.
-        ca.on.hojat.mlkitdemo.CameraSource.SizePair selectedPair = null;
+        SizePair selectedPair = null;
         int minDiff = Integer.MAX_VALUE;
-        for (ca.on.hojat.mlkitdemo.CameraSource.SizePair sizePair : validPreviewSizes) {
+        for (SizePair sizePair : validPreviewSizes) {
             com.google.android.gms.common.images.Size size = sizePair.preview;
             int diff =
                     Math.abs(size.getWidth() - desiredWidth) + Math.abs(size.getHeight() - desiredHeight);
@@ -357,13 +360,13 @@ public class CameraSource {
      *
      * @throws IOException if camera cannot be found or preview cannot be processed
      */
-    @android.annotation.SuppressLint("InlinedApi")
-    private android.hardware.Camera createCamera() throws java.io.IOException {
+    @SuppressLint("InlinedApi")
+    private Camera createCamera() throws IOException {
         int requestedCameraId = getIdForRequestedCamera(facing);
         if (requestedCameraId == -1) {
-            throw new java.io.IOException("Could not find requested camera.");
+            throw new IOException("Could not find requested camera.");
         }
-        android.hardware.Camera camera = android.hardware.Camera.open(requestedCameraId);
+        Camera camera = Camera.open(requestedCameraId);
 
         SizePair sizePair = PreferenceUtils.getCameraPreviewSizePair(activity, requestedCameraId);
         if (sizePair == null) {
@@ -375,28 +378,28 @@ public class CameraSource {
         }
 
         if (sizePair == null) {
-            throw new java.io.IOException("Could not find suitable preview size.");
+            throw new IOException("Could not find suitable preview size.");
         }
 
         previewSize = sizePair.preview;
-        android.util.Log.v(TAG, "Camera preview size: " + previewSize);
+        Log.v(TAG, "Camera preview size: " + previewSize);
 
         int[] previewFpsRange = selectPreviewFpsRange(camera);
         if (previewFpsRange == null) {
-            throw new java.io.IOException("Could not find suitable preview frames per second range.");
+            throw new IOException("Could not find suitable preview frames per second range.");
         }
 
-        android.hardware.Camera.Parameters parameters = camera.getParameters();
+        Camera.Parameters parameters = camera.getParameters();
 
         com.google.android.gms.common.images.Size pictureSize = sizePair.picture;
         if (pictureSize != null) {
-            android.util.Log.v(TAG, "Camera picture size: " + pictureSize);
+            Log.v(TAG, "Camera picture size: " + pictureSize);
             parameters.setPictureSize(pictureSize.getWidth(), pictureSize.getHeight());
         }
         parameters.setPreviewSize(previewSize.getWidth(), previewSize.getHeight());
         parameters.setPreviewFpsRange(
-                previewFpsRange[android.hardware.Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
-                previewFpsRange[android.hardware.Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
+                previewFpsRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
+                previewFpsRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
         // Use YV12 so that we can exercise YV12->NV21 auto-conversion logic for OCR detection
         parameters.setPreviewFormat(IMAGE_FORMAT);
 
@@ -405,10 +408,10 @@ public class CameraSource {
         if (REQUESTED_AUTO_FOCUS) {
             if (parameters
                     .getSupportedFocusModes()
-                    .contains(android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                parameters.setFocusMode(android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    .contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
             } else {
-                android.util.Log.i(TAG, "Camera auto focus is not supported on this device.");
+                Log.i(TAG, "Camera auto focus is not supported on this device.");
             }
         }
 
@@ -441,24 +444,24 @@ public class CameraSource {
      * @param parameters the camera parameters for which to set the rotation
      * @param cameraId   the camera id to set rotation based on
      */
-    private void setRotation(android.hardware.Camera camera, android.hardware.Camera.Parameters parameters, int cameraId) {
-        android.view.WindowManager windowManager = (android.view.WindowManager) activity.getSystemService(android.content.Context.WINDOW_SERVICE);
+    private void setRotation(Camera camera, Camera.Parameters parameters, int cameraId) {
+        WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         int degrees = 0;
         int rotation = windowManager.getDefaultDisplay().getRotation();
         switch (rotation) {
-            case android.view.Surface.ROTATION_0:
+            case Surface.ROTATION_0:
                 break;
-            case android.view.Surface.ROTATION_90:
+            case Surface.ROTATION_90:
                 degrees = 90;
                 break;
-            case android.view.Surface.ROTATION_180:
+            case Surface.ROTATION_180:
                 degrees = 180;
                 break;
-            case android.view.Surface.ROTATION_270:
+            case Surface.ROTATION_270:
                 degrees = 270;
                 break;
             default:
-                android.util.Log.e(TAG, "Bad rotation value: " + rotation);
+                Log.e(TAG, "Bad rotation value: " + rotation);
         }
 
         CameraInfo cameraInfo = new CameraInfo();
