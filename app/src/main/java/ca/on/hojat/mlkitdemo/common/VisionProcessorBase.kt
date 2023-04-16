@@ -11,7 +11,6 @@ import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
 import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.extensions.getBitmap
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.android.gms.tasks.Tasks
@@ -244,7 +243,7 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
         frameStartMs: Long
     ): Task<T> {
         val detectorStartMs = SystemClock.elapsedRealtime()
-        return task.addOnSuccessListener(executor, OnSuccessListener { results: T ->
+        return task.addOnSuccessListener(executor) { results: T ->
             val endMs = SystemClock.elapsedRealtime()
             val currentFrameLatencyMs = endMs - frameStartMs
             val currentDetectorLatencyMs = endMs - detectorStartMs
@@ -293,7 +292,7 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
                 )
             }
             graphicOverlay.postInvalidate()
-        }).addOnFailureListener(executor) { e: Exception ->
+        }.addOnFailureListener(executor) { e: Exception ->
             graphicOverlay.clear()
             graphicOverlay.postInvalidate()
             val error = "Failed to process. Error: " + e.localizedMessage
