@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
@@ -20,6 +19,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+
+import ca.on.hojat.mlkitdemo.extensions.BitmapKt;
 
 /**
  * Utils functions for bitmap conversions.
@@ -43,31 +44,11 @@ public class BitmapUtils {
             Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
             stream.close();
-            return rotateBitmap(bmp, metadata.getRotation(), false, false);
+            return BitmapKt.rotateBitmap(bmp, metadata.getRotation(), false, false);
         } catch (Exception e) {
             Log.e("VisionProcessorBase", "Error: " + e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Rotates a bitmap if it is converted from a bytebuffer.
-     */
-    private static Bitmap rotateBitmap(Bitmap bitmap, int rotationDegrees, boolean flipX, boolean flipY) {
-        Matrix matrix = new Matrix();
-
-        // Rotate the image back to straight.
-        matrix.postRotate(rotationDegrees);
-
-        // Mirror the image along the X or Y axis.
-        matrix.postScale(flipX ? -1.0f : 1.0f, flipY ? -1.0f : 1.0f);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-        // Recycle the old bitmap if it has changed.
-        if (rotatedBitmap != bitmap) {
-            bitmap.recycle();
-        }
-        return rotatedBitmap;
     }
 
     @Nullable
@@ -113,7 +94,7 @@ public class BitmapUtils {
                 // No transformations necessary in this case.
         }
 
-        return rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
+        return BitmapKt.rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
     }
 
     private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
