@@ -98,7 +98,6 @@ public class CameraSource {
         bytesToByteBuffer.clear();
     }
 
-
     /**
      * Stores a preview size and a corresponding same-aspect-ratio picture size. To avoid distorted
      * preview images on some devices, the picture size must be set to a size that is the same aspect
