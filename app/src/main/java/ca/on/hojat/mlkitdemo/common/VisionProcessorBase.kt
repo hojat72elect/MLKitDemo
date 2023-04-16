@@ -10,6 +10,7 @@ import androidx.annotation.GuardedBy
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
 import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
+import ca.on.hojat.mlkitdemo.extensions.getBitmap
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskExecutors
@@ -173,7 +174,7 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
         }
         var bitmap: Bitmap? = null
         if (!PreferenceUtils.isCameraLiveViewportEnabled(graphicOverlay.context)) {
-            bitmap = BitmapUtils.getBitmap(image)
+            bitmap = image.getBitmap()
         }
 
         if (isMlImageEnabled(graphicOverlay.context)) {

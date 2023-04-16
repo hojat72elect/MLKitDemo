@@ -14,8 +14,6 @@ import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.camera.core.ExperimentalGetImage;
-import androidx.camera.core.ImageProxy;
 import androidx.exifinterface.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
@@ -50,18 +48,6 @@ public class BitmapUtils {
             Log.e("VisionProcessorBase", "Error: " + e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Converts a YUV_420_888 image from CameraX API to a bitmap.
-     */
-    @Nullable
-    @ExperimentalGetImage
-    public static Bitmap getBitmap(ImageProxy image) {
-        FrameMetadata frameMetadata = new FrameMetadata.Builder().setWidth(image.getWidth()).setHeight(image.getHeight()).setRotation(image.getImageInfo().getRotationDegrees()).build();
-
-        ByteBuffer nv21Buffer = yuv420ThreePlanesToNV21(java.util.Objects.requireNonNull(image.getImage()).getPlanes(), image.getWidth(), image.getHeight());
-        return getBitmap(nv21Buffer, frameMetadata);
     }
 
     /**
@@ -170,7 +156,7 @@ public class BitmapUtils {
      * before the U buffer and the planes have a pixelStride of 2. If this is case, we can just copy
      * them to the NV21 array.
      */
-    private static ByteBuffer yuv420ThreePlanesToNV21(Plane[] yuv420888planes, int width, int height) {
+    public static ByteBuffer yuv420ThreePlanesToNV21(Plane[] yuv420888planes, int width, int height) {
         int imageSize = width * height;
         byte[] out = new byte[imageSize + 2 * (imageSize / 4)];
 
