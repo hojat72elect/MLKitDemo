@@ -48,6 +48,8 @@ public class BitmapUtils {
     }
 
     /**
+     * It's impossible to convert this into kotlin (I have already done that but we face a weird IndexOutOfBounds runtime error)
+     * <p>
      * Converts YUV_420_888 to NV21 bytebuffer.
      *
      * <p>The NV21 format consists of a single byte array containing the Y, U and V values. For an
