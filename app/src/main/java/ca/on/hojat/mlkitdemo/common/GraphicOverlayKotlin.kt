@@ -12,7 +12,7 @@ import com.google.common.primitives.Ints
 class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val lock = Object()
-    private val graphics = mutableListOf<Graphic>()
+    private val graphics = mutableListOf<GraphicKotlin>()
 
     // Matrix for transforming from image coordinates to overlay view coordinates.
     val transformationMatrix = Matrix()
@@ -60,7 +60,7 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
     /**
      * Adds a graphic to the overlay.
      */
-    fun add(graphic: Graphic) {
+    fun add(graphic: GraphicKotlin) {
         synchronized(lock) { graphics.add(graphic) }
     }
 
@@ -148,7 +148,7 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
  * element. Add instances to the overlay using
  * [GraphicOverlay.add(Graphic)].
  */
-abstract class Graphic(private val overlay: GraphicOverlayKotlin) {
+abstract class GraphicKotlin(private val overlay: GraphicOverlayKotlin) {
 
     /**
      * Draw the graphic on the supplied canvas. Drawing should
