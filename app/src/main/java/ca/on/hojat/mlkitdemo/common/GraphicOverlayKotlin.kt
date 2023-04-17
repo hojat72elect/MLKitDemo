@@ -170,7 +170,7 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
         /**
          * Returns the application context of the app.
          */
-        fun getApplicationContext(): Context = overlay.context.applicationContext
+        fun getApplicationContext() = overlay.context.applicationContext
 
         /**
          * Adjusts the x coordinate from the image's
@@ -225,8 +225,8 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
 
             // When visualizeZ is true, sets up the paint to different colors based on z values.
             // Gets the range of z value.
-            var zLowerBoundInScreenPixel: Float
-            var zUpperBoundInScreenPixel: Float
+            val zLowerBoundInScreenPixel: Float
+            val zUpperBoundInScreenPixel: Float
 
             if (rescaleZForVisualization) {
                 zLowerBoundInScreenPixel = minOf(-0.001f, scale(zMin))
