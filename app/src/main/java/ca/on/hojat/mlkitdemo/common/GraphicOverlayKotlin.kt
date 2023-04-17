@@ -141,7 +141,6 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
 
 }
 
-
 /**
  * Base class for a custom graphics object to be rendered
  * within the graphic overlay. Subclass this and implement
