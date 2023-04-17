@@ -1,6 +1,5 @@
 package ca.on.hojat.mlkitdemo.common;
 
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -8,15 +7,11 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
 import android.media.Image.Plane;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.exifinterface.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 import ca.on.hojat.mlkitdemo.extensions.BitmapKt;
@@ -25,7 +20,6 @@ import ca.on.hojat.mlkitdemo.extensions.BitmapKt;
  * Utils functions for bitmap conversions.
  */
 public class BitmapUtils {
-    private static final String TAG = "BitmapUtils";
 
     /**
      * I have already converted this to a kotlin extension function but
@@ -51,29 +45,6 @@ public class BitmapUtils {
             Log.e("VisionProcessorBase", "Error: " + e.getMessage());
         }
         return null;
-    }
-
-    public static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
-        // We only support parsing EXIF orientation tag from local file on the device.
-        // See also:
-        // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
-        if (!ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme()) && !ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
-            return 0;
-        }
-
-        ExifInterface exif;
-        try (InputStream inputStream = resolver.openInputStream(imageUri)) {
-            if (inputStream == null) {
-                return 0;
-            }
-
-            exif = new ExifInterface(inputStream);
-        } catch (IOException e) {
-            Log.e(TAG, "failed to open file to read rotation meta data: " + imageUri, e);
-            return 0;
-        }
-
-        return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
     }
 
     /**

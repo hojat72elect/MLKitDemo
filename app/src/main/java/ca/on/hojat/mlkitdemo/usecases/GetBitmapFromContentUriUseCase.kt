@@ -4,12 +4,14 @@ import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore.Images.Media
+import android.util.Log
 import androidx.exifinterface.media.ExifInterface
-import ca.on.hojat.mlkitdemo.common.BitmapUtils
 import ca.on.hojat.mlkitdemo.extensions.rotateBitmap
 import java.io.IOException
 
-
+/**
+ * You provide [ContentResolver] and [Uri]? for it; and will receive a [Bitmap]? which was hosted at that [Uri].
+ */
 object GetBitmapFromContentUriUseCase {
 
     @Throws(IOException::class)
@@ -20,7 +22,7 @@ object GetBitmapFromContentUriUseCase {
 
         val decodedBitmap =
             Media.getBitmap(contentResolver, imageUri) ?: return null
-        val orientation = BitmapUtils.getExifOrientationTag(contentResolver, imageUri)
+        val orientation = getExifOrientationTag(contentResolver, imageUri)
 
         var rotationDegrees = 0
         var flipX = false
@@ -65,5 +67,35 @@ object GetBitmapFromContentUriUseCase {
         }
 
         return decodedBitmap.rotateBitmap(rotationDegrees, flipX, flipY)
+    }
+
+
+    private fun getExifOrientationTag(
+        resolver: ContentResolver,
+        imageUri: Uri?
+    ): Int {
+        // We only support parsing EXIF orientation tag from local file on the device.
+        // See also:
+        // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
+        if (ContentResolver.SCHEME_CONTENT != imageUri?.scheme && ContentResolver.SCHEME_FILE != imageUri?.scheme)
+            return 0
+
+        var exif: ExifInterface
+        try {
+            resolver.openInputStream(imageUri).use { inputStream ->
+                if (inputStream == null)
+                    return 0
+
+                exif = ExifInterface(inputStream)
+            }
+        } catch (e: IOException) {
+            Log.e(
+                "BitmapContentUriUseCase",
+                "failed to open file to read rotation meta data: $imageUri", e
+            )
+            return 0
+        }
+
+        return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
     }
 }
