@@ -94,7 +94,7 @@ public class BitmapUtils {
     /**
      * Checks if the UV plane buffers of a YUV_420_888 image are in the NV21 format.
      */
-    private static boolean areUVPlanesNV21(Plane[] planes, int width, int height) {
+    public static boolean areUVPlanesNV21(Plane[] planes, int width, int height) {
         int imageSize = width * height;
 
         ByteBuffer uBuffer = planes[1].getBuffer();
@@ -125,7 +125,7 @@ public class BitmapUtils {
      * <p>The input plane data will be copied in 'out', starting at 'offset' and every pixel will be
      * spaced by 'pixelStride'. Note that there is no row padding on the output.
      */
-    private static void unpackPlane(Plane plane, int width, int height, byte[] out, int offset, int pixelStride) {
+    public static void unpackPlane(Plane plane, int width, int height, byte[] out, int offset, int pixelStride) {
         ByteBuffer buffer = plane.getBuffer();
         buffer.rewind();
 
