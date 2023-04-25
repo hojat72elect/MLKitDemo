@@ -5,7 +5,6 @@ import android.preference.PreferenceManager
 import android.util.Size
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
-import ca.on.hojat.mlkitdemo.CameraSource
 import ca.on.hojat.mlkitdemo.R
 import com.google.common.base.Preconditions
 import com.google.mlkit.common.model.LocalModel
@@ -24,54 +23,9 @@ import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
 object PreferenceUtils {
     private const val POSE_DETECTOR_PERFORMANCE_MODE_FAST = 1
 
-    @JvmStatic
-    fun saveString(context: Context, @StringRes prefKeyId: Int, value: String?) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-            .edit()
-            .putString(context.getString(prefKeyId), value)
-            .apply()
-    }
-
-    @JvmStatic
-    fun getCameraPreviewSizePair(context: Context, cameraId: Int): CameraSource.SizePair? {
-        Preconditions.checkArgument(
-            cameraId == CameraSource.CAMERA_FACING_BACK
-                    || cameraId == CameraSource.CAMERA_FACING_FRONT
-        )
-        val previewSizePrefKey: String
-        val pictureSizePrefKey: String
-        if (cameraId == CameraSource.CAMERA_FACING_BACK) {
-            previewSizePrefKey = context.getString(R.string.pref_key_rear_camera_preview_size)
-            pictureSizePrefKey = context.getString(R.string.pref_key_rear_camera_picture_size)
-        } else {
-            previewSizePrefKey = context.getString(R.string.pref_key_front_camera_preview_size)
-            pictureSizePrefKey = context.getString(R.string.pref_key_front_camera_picture_size)
-        }
-        return try {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            CameraSource.SizePair(
-                com.google.android.gms.common.images.Size.parseSize(
-                    sharedPreferences.getString(
-                        previewSizePrefKey,
-                        null
-                    )!!
-                ),
-                com.google.android.gms.common.images.Size.parseSize(
-                    sharedPreferences.getString(
-                        pictureSizePrefKey,
-                        null
-                    )!!
-                )
-            )
-        } catch (e: Exception) {
-            null
-        }
-    }
-
     fun getCameraXTargetResolution(context: Context, lensfacing: Int): Size? {
         Preconditions.checkArgument(
-            lensfacing == CameraSelector.LENS_FACING_BACK
-                    || lensfacing == CameraSelector.LENS_FACING_FRONT
+            lensfacing == CameraSelector.LENS_FACING_BACK || lensfacing == CameraSelector.LENS_FACING_FRONT
         )
         val prefKey =
             if (lensfacing == CameraSelector.LENS_FACING_BACK) context.getString(R.string.pref_key_camerax_rear_camera_target_resolution) else context.getString(
@@ -201,17 +155,13 @@ object PreferenceUtils {
         val enableFaceTracking = sharedPreferences.getBoolean(
             context.getString(R.string.pref_key_live_preview_face_detection_face_tracking), false
         )
-        val minFaceSize =
-            sharedPreferences.getString(
-                context.getString(R.string.pref_key_live_preview_face_detection_min_face_size),
-                "0.1"
-            )!!.toFloat()
-        val optionsBuilder = FaceDetectorOptions.Builder()
-            .setLandmarkMode(landmarkMode)
-            .setContourMode(contourMode)
-            .setClassificationMode(classificationMode)
-            .setPerformanceMode(performanceMode)
-            .setMinFaceSize(minFaceSize)
+        val minFaceSize = sharedPreferences.getString(
+            context.getString(R.string.pref_key_live_preview_face_detection_min_face_size), "0.1"
+        )!!.toFloat()
+        val optionsBuilder =
+            FaceDetectorOptions.Builder().setLandmarkMode(landmarkMode).setContourMode(contourMode)
+                .setClassificationMode(classificationMode).setPerformanceMode(performanceMode)
+                .setMinFaceSize(minFaceSize)
         if (enableFaceTracking) {
             optionsBuilder.enableTracking()
         }
