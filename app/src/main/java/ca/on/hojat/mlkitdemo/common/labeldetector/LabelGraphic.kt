@@ -36,7 +36,7 @@ class LabelGraphic(
                 )
             )
 
-            maxWidth = maxWidth.coerceAtLeast(Math.max(line1Width, line2Width))
+            maxWidth = maxWidth.coerceAtLeast(maxOf(line1Width, line2Width))
         }
 
         val x = 0f.coerceAtLeast(overlay.width / 2.0f - maxWidth / 2.0f)

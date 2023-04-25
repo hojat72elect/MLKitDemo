@@ -29,12 +29,12 @@ class BarcodeScannerProcessor(context: Context) : VisionProcessorBase<List<Barco
         return barcodeScanner.process(image)
     }
 
-    override fun onSuccess(barcodes: List<Barcode>, graphicOverlay: GraphicOverlay) {
-        if (barcodes.isEmpty()) {
+    override fun onSuccess(results: List<Barcode>, graphicOverlay: GraphicOverlay) {
+        if (results.isEmpty()) {
             Log.v(MANUAL_TESTING_LOG, "No barcode has been detected")
         }
-        for (i in barcodes.indices) {
-            val barcode = barcodes[i]
+        for (i in results.indices) {
+            val barcode = results[i]
             graphicOverlay.add(BarcodeGraphic(graphicOverlay, barcode))
             logExtrasForTesting(barcode)
         }

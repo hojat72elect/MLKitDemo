@@ -25,7 +25,7 @@ class FaceMeshGraphic(overlay: GraphicOverlay, private val faceMesh: FaceMesh) :
     private var zMax: Float
 
     @FaceMesh.ContourType
-    private val DISPLAY_CONTOURS =
+    private val displayContours =
         intArrayOf(
             FaceMesh.FACE_OVAL,
             FaceMesh.LEFT_EYEBROW_TOP,
@@ -120,7 +120,7 @@ class FaceMeshGraphic(overlay: GraphicOverlay, private val faceMesh: FaceMesh) :
 
     private fun getContourPoints(faceMesh: FaceMesh): List<FaceMeshPoint> {
         val contourPoints: MutableList<FaceMeshPoint> = ArrayList()
-        for (type in DISPLAY_CONTOURS) {
+        for (type in displayContours) {
             contourPoints.addAll(faceMesh.getPoints(type))
         }
         return contourPoints

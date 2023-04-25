@@ -34,9 +34,9 @@ class LabelDetectorProcessor(context: Context, options: ImageLabelerOptionsBase)
         return imageLabeler.process(image)
     }
 
-    override fun onSuccess(labels: List<ImageLabel>, graphicOverlay: GraphicOverlay) {
-        graphicOverlay.add(LabelGraphic(graphicOverlay, labels))
-        logExtrasForTesting(labels)
+    override fun onSuccess(results: List<ImageLabel>, graphicOverlay: GraphicOverlay) {
+        graphicOverlay.add(LabelGraphic(graphicOverlay, results))
+        logExtrasForTesting(results)
     }
 
     override fun onFailure(e: Exception) {

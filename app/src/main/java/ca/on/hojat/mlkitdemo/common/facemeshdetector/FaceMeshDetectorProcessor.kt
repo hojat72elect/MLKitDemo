@@ -35,8 +35,8 @@ class FaceMeshDetectorProcessor(context: Context) :
         return detector.process(image)
     }
 
-    override fun onSuccess(faces: List<FaceMesh>, graphicOverlay: GraphicOverlay) {
-        for (face in faces) {
+    override fun onSuccess(results: List<FaceMesh>, graphicOverlay: GraphicOverlay) {
+        for (face in results) {
             graphicOverlay.add(FaceMeshGraphic(graphicOverlay, face))
         }
     }

@@ -115,7 +115,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         // Create a translation result or error object.
         val processTranslation =
-            OnCompleteListener<String> { task ->
+            OnCompleteListener { task ->
                 if (task.isSuccessful) {
                     translatedText.value = ResultOrError(task.result, null)
                 } else {
