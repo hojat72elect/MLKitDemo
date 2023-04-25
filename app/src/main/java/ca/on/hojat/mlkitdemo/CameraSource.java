@@ -8,8 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.common.images.Size;
+
 import java.nio.ByteBuffer;
-import java.util.IdentityHashMap;
 
 import ca.on.hojat.mlkitdemo.common.FrameMetadata;
 import ca.on.hojat.mlkitdemo.common.GraphicOverlay;
@@ -31,35 +32,28 @@ public class CameraSource {
     private final FrameProcessingRunnable processingRunnable;
     private final Object processorLock = new Object();
     /**
-     * Map to convert between a byte array, received from the camera, and its associated byte buffer.
-     * We use byte buffers internally because this is a more efficient way to call into native code
-     * later (avoids a potential copy).
-     *
-     * <p><b>Note:</b> uses IdentityHashMap here instead of HashMap because the behavior of an array's
-     * equals, hashCode and toString methods is both useless and unexpected. IdentityHashMap enforces
-     * identity ('==') check on the keys.
-     */
-    private final IdentityHashMap<byte[], ByteBuffer> bytesToByteBuffer = new IdentityHashMap<>();
-    protected Activity activity;
-    private Camera camera;
-    /**
      * Rotation of the device, and thus the associated preview images captured from the device.
      */
-    private int rotationDegrees;
-    private com.google.android.gms.common.images.Size previewSize;
+    private final int rotationDegrees;
+    private final Size previewSize;
+    private final VisionImageProcessor frameProcessor;
+    protected Activity activity;
     // This instance needs to be held onto to avoid GC of its underlying resources. Even though it
     // isn't used outside of the method that creates it, it still must have hard references maintained
     // to it.
+    private Camera camera;
     /**
      * Dedicated thread and associated runnable for calling into the detector with frames, as the
      * frames become available from the camera.
      */
     private Thread processingThread;
-    private VisionImageProcessor frameProcessor;
 
-    public CameraSource(Activity activity, GraphicOverlay overlay) {
+    public CameraSource(android.app.Activity activity, ca.on.hojat.mlkitdemo.common.GraphicOverlay overlay, int rotationDegrees, com.google.android.gms.common.images.Size previewSize, ca.on.hojat.mlkitdemo.common.VisionImageProcessor frameProcessor) {
         this.activity = activity;
         graphicOverlay = overlay;
+        this.rotationDegrees = rotationDegrees;
+        this.previewSize = previewSize;
+        this.frameProcessor = frameProcessor;
         graphicOverlay.clear();
         processingRunnable = new FrameProcessingRunnable();
     }
@@ -76,7 +70,7 @@ public class CameraSource {
                 // quickly after stop).
                 processingThread.join();
             } catch (InterruptedException e) {
-                android.util.Log.d(TAG, "Frame processing thread interrupted on release.");
+                Log.d(TAG, "Frame processing thread interrupted on release.");
             }
             processingThread = null;
         }
@@ -94,8 +88,7 @@ public class CameraSource {
             camera = null;
         }
 
-        // Release the reference to any image buffers, since these will no longer be in use.
-        bytesToByteBuffer.clear();
+
     }
 
     /**
