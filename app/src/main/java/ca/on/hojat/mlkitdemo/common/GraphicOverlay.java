@@ -137,7 +137,6 @@ public class GraphicOverlay extends View {
 
         needUpdateTransformation = false;
     }
-
     /**
      * Draws the overlay with its associated graphic objects.
      */
