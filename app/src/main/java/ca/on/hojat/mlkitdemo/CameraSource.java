@@ -48,7 +48,13 @@ public class CameraSource {
      */
     private Thread processingThread;
 
-    public CameraSource(android.app.Activity activity, ca.on.hojat.mlkitdemo.common.GraphicOverlay overlay, int rotationDegrees, com.google.android.gms.common.images.Size previewSize, ca.on.hojat.mlkitdemo.common.VisionImageProcessor frameProcessor) {
+    public CameraSource(
+            Activity activity,
+            GraphicOverlay overlay,
+            int rotationDegrees,
+            Size previewSize,
+            VisionImageProcessor frameProcessor
+    ) {
         this.activity = activity;
         graphicOverlay = overlay;
         this.rotationDegrees = rotationDegrees;
@@ -98,11 +104,14 @@ public class CameraSource {
      * null, then there is no picture size with the same aspect ratio as the preview size.
      */
     public static class SizePair {
-        public final com.google.android.gms.common.images.Size preview;
+        public final Size preview;
         @Nullable
-        public final com.google.android.gms.common.images.Size picture;
+        public final Size picture;
 
-        public SizePair(com.google.android.gms.common.images.Size previewSize, @Nullable com.google.android.gms.common.images.Size pictureSize) {
+        public SizePair(
+                Size previewSize,
+                @Nullable Size pictureSize
+        ) {
             preview = previewSize;
             picture = pictureSize;
         }
