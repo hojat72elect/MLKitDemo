@@ -17,7 +17,7 @@ fun ByteBuffer.getBitmap(metadata: FrameMetadata): Bitmap? {
 
     rewind()
     val imageInBuffer = ByteArray(limit())
-    get(imageInBuffer, 0, imageInBuffer.size)
+    get(imageInBuffer, 0, imageInBuffer.size) // this line is a bit weird..
     try {
         val image = YuvImage(imageInBuffer, ImageFormat.NV21, metadata.width, metadata.height, null)
         val stream = ByteArrayOutputStream()
@@ -32,7 +32,7 @@ fun ByteBuffer.getBitmap(metadata: FrameMetadata): Bitmap? {
             flipY = false
         )
     } catch (e: Exception) {
-        Log.e("VisionProcessorBase", e.message, e)
+        Log.e("VisionProcessorBase", e.toString())
     }
     return null
 }
