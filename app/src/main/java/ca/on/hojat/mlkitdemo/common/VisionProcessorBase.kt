@@ -136,7 +136,7 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
         // If live viewport is on (that is the underneath surface view takes care of the camera preview
         // drawing), skip the unnecessary bitmap creation that used for the manual preview drawing.
         val bitmap = if (PreferenceUtils.isCameraLiveViewportEnabled(graphicOverlay.context)) null
-        else BitmapUtils.getBitmap(data, frameMetadata)
+        else data.getBitmap(frameMetadata)
 
         if (isMlImageEnabled(graphicOverlay.context)) {
             val mlImage = ByteBufferMlImageBuilder(

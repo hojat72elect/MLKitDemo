@@ -1,51 +1,16 @@
 package ca.on.hojat.mlkitdemo.common;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
 import android.media.Image;
 import android.media.Image.Plane;
-import android.util.Log;
+
 import ca.on.hojat.mlkitdemo.extensions.PlaneKt;
-import androidx.annotation.Nullable;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
-
-import ca.on.hojat.mlkitdemo.extensions.BitmapKt;
 
 /**
  * Utils functions for bitmap conversions.
  */
 public class BitmapUtils {
-
-    /**
-     * I have already converted this to a kotlin extension function but
-     * I don't know why, whenever I migrate to that file, will have a
-     * run-time error from ML-Kit.
-     * Converts NV21 format byte buffer to bitmap.
-     */
-    @Nullable
-    public static Bitmap getBitmap(ByteBuffer data, FrameMetadata metadata) {
-        data.rewind();
-        byte[] imageInBuffer = new byte[data.limit()];
-        data.get(imageInBuffer, 0, imageInBuffer.length);
-        try {
-            YuvImage image = new YuvImage(imageInBuffer, ImageFormat.NV21, metadata.getWidth(), metadata.getHeight(), null);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            image.compressToJpeg(new Rect(0, 0, metadata.getWidth(), metadata.getHeight()), 80, stream);
-
-            Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
-
-            stream.close();
-            return BitmapKt.rotateBitmap(bmp, metadata.getRotation(), false, false);
-        } catch (Exception e) {
-            Log.e("VisionProcessorBase", "Error: " + e.getMessage());
-        }
-        return null;
-    }
 
     /**
      * It's impossible to convert this into kotlin (I have already done that but we face a weird IndexOutOfBounds runtime error)
