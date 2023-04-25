@@ -1,6 +1,5 @@
 package ca.on.hojat.mlkitdemo
 
-import android.app.Activity
 import android.hardware.Camera
 import android.hardware.Camera.CameraInfo
 import android.util.Log
@@ -21,8 +20,7 @@ import java.nio.ByteBuffer
  * @param rotationDegrees  Rotation of the device, and thus the
  * associated preview images captured from the device.
  */
-class CameraSourceKotlin(
-    private val activity: Activity,
+class CameraSource(
     private val graphicOverlay: GraphicOverlay,
     private val rotationDegrees: Int,
     private val previewSize: Size,
@@ -114,7 +112,7 @@ class CameraSourceKotlin(
      * previous frame, detection on the most recently received
      * frame will immediately start on the same thread.
      */
-    private inner class FrameProcessingRunnable() : Runnable {
+    private inner class FrameProcessingRunnable : Runnable {
 
         // This lock guards all of the member variables below.
         private val lock = Object()
