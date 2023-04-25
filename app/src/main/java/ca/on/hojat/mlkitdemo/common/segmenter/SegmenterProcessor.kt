@@ -44,13 +44,13 @@ class SegmenterProcessor :
     }
 
     override fun onSuccess(
-        segmentationMask: SegmentationMask,
+        results: SegmentationMask,
         graphicOverlay: GraphicOverlay
     ) {
         graphicOverlay.add(
             SegmentationGraphic(
                 graphicOverlay,
-                segmentationMask
+                results
             )
         )
     }

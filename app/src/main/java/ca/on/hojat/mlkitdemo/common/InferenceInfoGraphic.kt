@@ -23,13 +23,6 @@ class InferenceInfoGraphic(
         postInvalidate()
     }
 
-    /**
-     * Creates an [InferenceInfoGraphic] to only display image size.
-     */
-    constructor(overlay: GraphicOverlay) : this(overlay, 0, 0, null) {
-        showLatencyInfo = false
-    }
-
     @Synchronized
     override fun draw(canvas: Canvas) {
         val x = TEXT_SIZE * 0.5f

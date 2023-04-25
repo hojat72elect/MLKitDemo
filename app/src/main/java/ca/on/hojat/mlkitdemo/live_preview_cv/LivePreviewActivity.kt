@@ -47,7 +47,6 @@ class LivePreviewActivity : AppCompatActivity(), OnItemSelectedListener,
 
     private lateinit var binding: ActivityVisionCameraxLivePreviewBinding
 
-
     private var cameraProvider: ProcessCameraProvider? = null
     private var previewUseCase: Preview? = null
     private var analysisUseCase: ImageAnalysis? = null
