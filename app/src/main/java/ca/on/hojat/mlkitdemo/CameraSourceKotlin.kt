@@ -29,7 +29,7 @@ class CameraSourceKotlin(
     private val frameProcessor: VisionImageProcessor
 ) {
 
-    private var processingRunnable: FrameProcessingRunnable? = null
+    private val processingRunnable = FrameProcessingRunnable()
     private val processorLock = Object()
 
     // This instance needs to be held onto to avoid GC of its underlying resources. Even though it
@@ -37,7 +37,7 @@ class CameraSourceKotlin(
     // to it.
     private var camera: Camera? = null
 
-    private var processingThread: Thread?=null
+    private var processingThread: Thread? = null
 
     init {
         graphicOverlay.clear()
@@ -51,7 +51,7 @@ class CameraSourceKotlin(
      */
     @Synchronized
     fun stop() {
-        processingRunnable?.setActive()
+        processingRunnable.setActive()
         if (processingThread != null) {
             try {
                 // Wait for the thread to complete to ensure that we can't have multiple threads
@@ -69,7 +69,7 @@ class CameraSourceKotlin(
             try {
                 camera!!.setPreviewTexture(null)
                 camera!!.setPreviewDisplay(null)
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 Log.e(TAG, "Failed to clear camera preview: $e")
             }
             camera!!.release()
@@ -157,6 +157,7 @@ class CameraSourceKotlin(
          */
         override fun run() {
             var data: ByteBuffer
+
             while (true) {
                 synchronized(lock) {
                     while (active && pendingFrameData == null) {
@@ -173,7 +174,7 @@ class CameraSourceKotlin(
                             return
                         }
                     }
-                    if (!active) {
+                    if (active.not()) {
                         // Exit the loop once this camera source is stopped or released.  We check
                         // this here, immediately after the wait() above, to handle the case where
                         // setActive(false) had been called, triggering the termination of this
