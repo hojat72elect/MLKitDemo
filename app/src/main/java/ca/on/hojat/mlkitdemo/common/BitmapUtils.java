@@ -70,7 +70,7 @@ public class BitmapUtils {
         int imageSize = width * height;
         byte[] out = new byte[imageSize + 2 * (imageSize / 4)];
 
-        if (areUVPlanesNV21(yuv420888planes, width, height)) {
+        if (PlaneKt.areNV21(yuv420888planes, width, height)) {
             // Copy the Y values.
             yuv420888planes[0].getBuffer().get(out, 0, imageSize);
 
@@ -91,33 +91,5 @@ public class BitmapUtils {
         }
 
         return ByteBuffer.wrap(out);
-    }
-
-    /**
-     * Checks if the UV plane buffers of a YUV_420_888 image are in the NV21 format.
-     */
-    public static boolean areUVPlanesNV21(Plane[] planes, int width, int height) {
-        int imageSize = width * height;
-
-        ByteBuffer uBuffer = planes[1].getBuffer();
-        ByteBuffer vBuffer = planes[2].getBuffer();
-
-        // Backup buffer properties.
-        int vBufferPosition = vBuffer.position();
-        int uBufferLimit = uBuffer.limit();
-
-        // Advance the V buffer by 1 byte, since the U buffer will not contain the first V value.
-        vBuffer.position(vBufferPosition + 1);
-        // Chop off the last byte of the U buffer, since the V buffer will not contain the last U value.
-        uBuffer.limit(uBufferLimit - 1);
-
-        // Check that the buffers are equal and have the expected number of elements.
-        boolean areNV21 = (vBuffer.remaining() == (2 * imageSize / 4 - 2)) && (vBuffer.compareTo(uBuffer) == 0);
-
-        // Restore buffers to their initial state.
-        vBuffer.position(vBufferPosition);
-        uBuffer.limit(uBufferLimit);
-
-        return areNV21;
     }
 }
