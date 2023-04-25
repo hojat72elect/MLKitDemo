@@ -46,7 +46,7 @@ fun Plane.unpack(
 
 /**
  * Is applied to an Array of [Plane]s and checks if the
- * UV plane buffers of a YUV_420_888 image are in the NV21
+ * UV plane of a YUV_420_888 image are in the NV21
  * format.
  */
 fun Array<Plane>.areNV21(width: Int, height: Int): Boolean {
