@@ -8,7 +8,7 @@ import android.graphics.YuvImage;
 import android.media.Image;
 import android.media.Image.Plane;
 import android.util.Log;
-
+import ca.on.hojat.mlkitdemo.extensions.PlaneKt;
 import androidx.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
@@ -83,11 +83,11 @@ public class BitmapUtils {
         } else {
             // Fallback to copying the UV values one by one, which is slower but also works.
             // Unpack Y.
-            unpackPlane(yuv420888planes[0], width, height, out, 0, 1);
+            PlaneKt.unpack(yuv420888planes[0], width, height, out, 0, 1);
             // Unpack U.
-            unpackPlane(yuv420888planes[1], width, height, out, imageSize + 1, 2);
+            PlaneKt.unpack(yuv420888planes[1], width, height, out, imageSize + 1, 2);
             // Unpack V.
-            unpackPlane(yuv420888planes[2], width, height, out, imageSize, 2);
+            PlaneKt.unpack(yuv420888planes[2], width, height, out, imageSize, 2);
         }
 
         return ByteBuffer.wrap(out);
@@ -119,38 +119,5 @@ public class BitmapUtils {
         uBuffer.limit(uBufferLimit);
 
         return areNV21;
-    }
-
-    /**
-     * Unpack an image plane into a byte array.
-     *
-     * <p>The input plane data will be copied in 'out', starting at 'offset' and every pixel will be
-     * spaced by 'pixelStride'. Note that there is no row padding on the output.
-     */
-    public static void unpackPlane(Plane plane, int width, int height, byte[] out, int offset, int pixelStride) {
-        ByteBuffer buffer = plane.getBuffer();
-        buffer.rewind();
-
-        // Compute the size of the current plane.
-        // We assume that it has the aspect ratio as the original image.
-        int numRow = (buffer.limit() + plane.getRowStride() - 1) / plane.getRowStride();
-        if (numRow == 0) {
-            return;
-        }
-        int scaleFactor = height / numRow;
-        int numCol = width / scaleFactor;
-
-        // Extract the data in the output buffer.
-        int outputPos = offset;
-        int rowStart = 0;
-        for (int row = 0; row < numRow; row++) {
-            int inputPos = rowStart;
-            for (int col = 0; col < numCol; col++) {
-                out[outputPos] = buffer.get(inputPos);
-                outputPos += pixelStride;
-                inputPos += plane.getPixelStride();
-            }
-            rowStart += plane.getRowStride();
-        }
     }
 }
