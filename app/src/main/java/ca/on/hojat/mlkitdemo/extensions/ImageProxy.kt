@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.media.Image.Plane
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
-import ca.on.hojat.mlkitdemo.common.BitmapUtils.yuv420ThreePlanesToNV21
 import ca.on.hojat.mlkitdemo.common.FrameMetadata
 import java.nio.ByteBuffer
 
