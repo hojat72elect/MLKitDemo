@@ -9,37 +9,58 @@ import android.view.View
 import com.google.common.base.Preconditions
 import com.google.common.primitives.Ints
 
+/**
+ * A view which renders a series of custom graphics to be
+ * overlayed on top of an associated preview (i.e., the
+ * camera preview). The creator can add graphic objects,
+ * update the objects, and remove them, triggering the
+ * appropriate drawing and invalidation within the view.
+ *
+ * Supports scaling and mirroring of the graphics relative
+ * to the camera's preview properties. The idea is that
+ * detection items are expressed in terms of an image size,
+ * but need to be scaled up to the full view size, and also
+ * mirrored in the case of the front-facing camera.
+ *
+ * Associated [Graphic] items should use the following methods
+ * to convert to view coordinates for the graphics that are
+ * drawn:
+ *
+ *
+ * 1- [Graphic.scale(float)] adjusts the size of the supplied
+ * value from the image scale to the view scale.
+ *
+ * 2- [Graphic.translateX(float)] and [Graphic.translateY(float)]} adjust the coordinate from the image's coordinate
+ * system to the view coordinate system.
+ *
+ */
 class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val lock = Object()
     private val graphics = mutableListOf<GraphicKotlin>()
 
     // Matrix for transforming from image coordinates to overlay view coordinates.
-    val transformationMatrix = Matrix()
+    private val transformationMatrix = Matrix()
 
-    var imageWidth = 0
-        private set
-    var imageHeight = 0
-        private set
+    private var imageWidth = 0
+    private var imageHeight = 0
 
     // The factor of overlay View size to image size.
     // Anything in the image coordinates need to be
     // scaled by this amount to fit with the area of
     // overlay View.
-    var scaleFactor = 1f
-        private set
+    private var scaleFactor = 1f
+
 
     // The number of horizontal pixels needed to be cropped on each side to fit the image with the
     // area of overlay View after scaling.
-    var postScaleWidthOffset = 0f
-        private set
+    private var postScaleWidthOffset = 0f
+
 
     // The number of vertical pixels needed to be cropped on each side to fit the image with the
     // area of overlay View after scaling.
-    var postScaleHeightOffset = 0f
-        private set
-    var isImageFlipped = false
-        private set
+    private var postScaleHeightOffset = 0f
+    private var isImageFlipped = false
     private var needUpdateTransformation = true
 
 
@@ -96,21 +117,22 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
 
     private fun updateTransformationIfNeeded() {
 
-        if (!needUpdateTransformation || imageWidth <= 0 || imageHeight <= 0) {
+        if (needUpdateTransformation.not() || imageWidth <= 0 || imageHeight <= 0)
             return
-        }
-        val viewAspectRatio = (width / height).toFloat()
-        val imageAspectRatio = (imageWidth / imageHeight).toFloat()
+
+
+        val viewAspectRatio = width.toFloat() / height
+        val imageAspectRatio = imageWidth.toFloat() / imageHeight
         postScaleWidthOffset = 0f
         postScaleHeightOffset = 0f
         if (viewAspectRatio > imageAspectRatio) {
             // The image needs to be vertically cropped to be displayed in this view.
-            scaleFactor = (width / imageWidth).toFloat()
-            postScaleHeightOffset = (width / imageAspectRatio - height) / 2
+            scaleFactor = width.toFloat() / imageWidth
+            postScaleHeightOffset = (width.toFloat() / imageAspectRatio - height) / 2
         } else {
             // The image needs to be horizontally cropped to be displayed in this view.
-            scaleFactor = (height / imageHeight).toFloat()
-            postScaleWidthOffset = (height * imageAspectRatio - width) / 2
+            scaleFactor = height.toFloat() / imageHeight
+            postScaleWidthOffset = (height.toFloat() * imageAspectRatio - width) / 2
         }
 
         transformationMatrix.reset()
@@ -225,7 +247,7 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
             zMax: Float
         ) {
 
-            if (!visualizeZ)
+            if (visualizeZ.not())
                 return
 
             // When visualizeZ is true, sets up the paint to different colors based on z values.
