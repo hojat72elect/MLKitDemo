@@ -70,13 +70,13 @@ class FaceMeshGraphic(overlay: GraphicOverlay, private val faceMesh: FaceMesh) :
         // Draw face mesh points
         for (point in points) {
             updatePaintColorByZValue(
-                positionPaint,
-                canvas,
-                /* visualizeZ= */true,
-                /* rescaleZForVisualization= */true,
-                point.position.z,
-                zMin,
-                zMax
+                paint = positionPaint,
+                canvas = canvas,
+                visualizeZ = true,
+                rescaleZForVisualization = true,
+                zInImagePixel = point.position.z,
+                zMin = zMin,
+                zMax = zMax
             )
             canvas.drawCircle(
                 translateX(point.position.x),
@@ -101,13 +101,13 @@ class FaceMeshGraphic(overlay: GraphicOverlay, private val faceMesh: FaceMesh) :
 
     private fun drawLine(canvas: Canvas, point1: PointF3D, point2: PointF3D) {
         updatePaintColorByZValue(
-            positionPaint,
-            canvas,
-            /* visualizeZ= */true,
-            /* rescaleZForVisualization= */true,
-            (point1.z + point2.z) / 2,
-            zMin,
-            zMax
+            paint = positionPaint,
+            canvas = canvas,
+            visualizeZ = true,
+            rescaleZForVisualization = true,
+            zInImagePixel = (point1.z + point2.z) / 2,
+            zMin = zMin,
+            zMax = zMax
         )
         canvas.drawLine(
             translateX(point1.x),

@@ -298,7 +298,6 @@ object PreferenceUtils {
         return sharedPreferences.getBoolean(prefKey, false)
     }
 
-
     @JvmStatic
     fun getFaceMeshUseCase(context: Context): Int {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)

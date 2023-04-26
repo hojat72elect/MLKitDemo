@@ -200,7 +200,7 @@ class GraphicOverlay(context: Context, attrs: AttributeSet) : View(context, attr
         /**
          * Returns the application context of the app.
          */
-        fun getApplicationContext() = overlay.context.applicationContext
+        fun getApplicationContext(): Context = overlay.context.applicationContext
 
         /**
          * Adjusts the x coordinate from the image's
