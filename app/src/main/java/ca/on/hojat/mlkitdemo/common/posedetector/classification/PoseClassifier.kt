@@ -18,7 +18,7 @@ import java.util.PriorityQueue
  * Inspired by [K-Nearest Neighbors Algorithm](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) with outlier
  * filtering.
  */
-class PoseClassifierKotlin(
+class PoseClassifier(
     private val poseSamples: List<PoseSample>,
     private val maxDistanceTopK: Int,
     private val meanDistanceTopK: Int,
@@ -44,7 +44,7 @@ class PoseClassifierKotlin(
 
     fun classify(pose: Pose) = classify(extractPoseLandmarks(pose))
 
-    fun classify(landmarks: List<PointF3D>): ClassificationResult {
+    private fun classify(landmarks: List<PointF3D>): ClassificationResult {
         val result = ClassificationResult()
         // Return early if no landmarks detected.
         if (landmarks.isEmpty())
