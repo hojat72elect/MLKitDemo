@@ -6,8 +6,8 @@ import android.util.LruCache
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorFragment.Companion.DESIRED_HEIGHT_CROP_PERCENT
-import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorFragment.Companion.DESIRED_WIDTH_CROP_PERCENT
+import ca.on.hojat.mlkitdemo.camera_translator.LiveTranslatorFragment.Companion.DESIRED_HEIGHT_CROP_PERCENT
+import ca.on.hojat.mlkitdemo.camera_translator.LiveTranslatorFragment.Companion.DESIRED_WIDTH_CROP_PERCENT
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks

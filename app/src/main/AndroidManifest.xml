@@ -54,7 +54,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".camera_translator.LiveCameraTranslatorActivity"
+            android:name=".camera_translator.LiveTranslatorActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 

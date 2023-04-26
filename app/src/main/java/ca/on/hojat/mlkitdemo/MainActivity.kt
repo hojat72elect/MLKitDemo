@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity
+import ca.on.hojat.mlkitdemo.camera_translator.LiveTranslatorActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
 import ca.on.hojat.mlkitdemo.digital_ink_recognition.DigitalInkMainActivity
 import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val optionsList = arrayListOf(
-        "CameraX live preview vision detectors",
-        "Still image vision detector",
-        "Live camera translator",
+        "Live preview vision detectors",
+        "Still image vision detectors",
+        "Live translator",
         "Digital ink recognition"
     )
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                         // live camera translator
                         val intent = Intent(
                             applicationContext,
-                            LiveCameraTranslatorActivity::class.java
+                            LiveTranslatorActivity::class.java
                         )
                         startActivity(intent)
                     }

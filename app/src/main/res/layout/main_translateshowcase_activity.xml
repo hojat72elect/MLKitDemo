@@ -20,4 +20,4 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.on.hojat.mlkitdemo.camera_translator.LiveCameraTranslatorActivity" />
+    tools:context="ca.on.hojat.mlkitdemo.camera_translator.LiveTranslatorActivity" />

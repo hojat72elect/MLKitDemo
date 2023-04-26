@@ -3,7 +3,7 @@
     <string name="menu_item_settings" translatable="false">Settings</string>
 
     <!--    settings preferences -->
-    <string name="pref_screen_title_camerax_live_preview" translatable="false">CameraX live preview settings</string>
+    <string name="pref_screen_title_camerax_live_preview" translatable="false">Live preview settings</string>
     <string name="pref_screen_title_still_image" translatable="false">Still image settings</string>
     <string name="pref_screen_title_live_camera_translator" translatable="false">Live camera translator settings</string>
     <string name="pref_screen_title_digital_ink_recognition" translatable="false">Digital ink recognition settings</string>
