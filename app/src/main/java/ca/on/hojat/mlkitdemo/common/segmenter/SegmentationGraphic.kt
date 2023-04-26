@@ -25,11 +25,11 @@ class SegmentationGraphic(overlay: GraphicOverlay, segmentationMask: Segmentatio
             maskColorsFromByteBuffer(mask), maskWidth, maskHeight, Bitmap.Config.ARGB_8888
         )
         if (isRawSizeMaskEnabled) {
-            val matrix = Matrix(transformationMatrix)
+            val matrix = Matrix(getTransformationMatrix())
             matrix.preScale(scaleX, scaleY)
             canvas.drawBitmap(bitmap, matrix, null)
         } else {
-            canvas.drawBitmap(bitmap, transformationMatrix, null)
+            canvas.drawBitmap(bitmap, getTransformationMatrix(), null)
         }
         bitmap.recycle()
         // Reset byteBuffer pointer to beginning, so that the mask can be redrawn if screen is refreshed

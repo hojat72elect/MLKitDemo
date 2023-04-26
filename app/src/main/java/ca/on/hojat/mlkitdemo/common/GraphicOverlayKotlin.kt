@@ -6,6 +6,7 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import ca.on.hojat.mlkitdemo.common.GraphicOverlay.Graphic
 import com.google.common.base.Preconditions
 import com.google.common.primitives.Ints
 
@@ -34,16 +35,18 @@ import com.google.common.primitives.Ints
  * system to the view coordinate system.
  *
  */
-class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class GraphicOverlay(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val lock = Object()
-    private val graphics = mutableListOf<GraphicKotlin>()
+    private val graphics = mutableListOf<Graphic>()
 
     // Matrix for transforming from image coordinates to overlay view coordinates.
     private val transformationMatrix = Matrix()
 
-    private var imageWidth = 0
-    private var imageHeight = 0
+    var imageWidth = 0
+        private set
+    var imageHeight = 0
+        private set
 
     // The factor of overlay View size to image size.
     // Anything in the image coordinates need to be
@@ -81,7 +84,7 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
     /**
      * Adds a graphic to the overlay.
      */
-    fun add(graphic: GraphicKotlin) {
+    fun add(graphic: Graphic) {
         synchronized(lock) { graphics.add(graphic) }
     }
 
@@ -161,7 +164,6 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
         }
     }
 
-
     /**
      * Base class for a custom graphics object to be rendered
      * within the graphic overlay. Subclass this and implement
@@ -169,7 +171,8 @@ class GraphicOverlayKotlin(context: Context, attrs: AttributeSet) : View(context
      * element. Add instances to the overlay using
      * [GraphicOverlay.add(Graphic)].
      */
-    abstract inner class GraphicKotlin(private val overlay: GraphicOverlayKotlin) {
+
+    abstract class Graphic(private val overlay: GraphicOverlay) {
 
         /**
          * Draw the graphic on the supplied canvas. Drawing should

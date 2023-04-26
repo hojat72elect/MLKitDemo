@@ -142,7 +142,7 @@ class FaceMeshGraphic(overlay: GraphicOverlay, private val faceMesh: FaceMesh) :
         boxPaint.style = Paint.Style.STROKE
         boxPaint.strokeWidth = BOX_STROKE_WIDTH
 
-        useCase = PreferenceUtils.getFaceMeshUseCase(applicationContext)
+        useCase = PreferenceUtils.getFaceMeshUseCase(getApplicationContext())
         zMin = java.lang.Float.MAX_VALUE
         zMax = java.lang.Float.MIN_VALUE
     }
