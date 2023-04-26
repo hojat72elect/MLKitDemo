@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * TODO: this class is really hard to be converted into kotlin;
- * it should be the last class that gets converted.
  * <p>
  * Classifies [Pose] based on given [PoseSample]s.
  * <p>
