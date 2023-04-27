@@ -6,7 +6,7 @@ import android.net.Uri
 import android.provider.MediaStore.Images.Media
 import android.util.Log
 import androidx.exifinterface.media.ExifInterface
-import ca.on.hojat.mlkitdemo.extensions.rotateBitmap
+import ca.on.hojat.mlkitdemo.shared.extensions.rotateBitmap
 import java.io.IOException
 
 /**

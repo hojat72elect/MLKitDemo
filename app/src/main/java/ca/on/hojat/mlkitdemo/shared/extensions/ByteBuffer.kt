@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.extensions
+package ca.on.hojat.mlkitdemo.shared.extensions
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.graphics.YuvImage
 import android.util.Log
 import ca.on.hojat.mlkitdemo.common.FrameMetadata
+import ca.on.hojat.mlkitdemo.shared.extensions.rotateBitmap
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 

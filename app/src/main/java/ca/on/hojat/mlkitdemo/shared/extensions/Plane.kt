@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.extensions
+package ca.on.hojat.mlkitdemo.shared.extensions
 
 import android.media.Image.Plane
 
