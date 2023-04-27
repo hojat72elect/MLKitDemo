@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.labeldetector
+package ca.on.hojat.mlkitdemo.shared.labeldetector
 
 import android.graphics.Canvas
 import android.graphics.Color

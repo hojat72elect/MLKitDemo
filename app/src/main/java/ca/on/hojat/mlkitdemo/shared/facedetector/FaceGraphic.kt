@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.facedetector
+package ca.on.hojat.mlkitdemo.shared.facedetector
 
 import android.graphics.Canvas
 import android.graphics.Color

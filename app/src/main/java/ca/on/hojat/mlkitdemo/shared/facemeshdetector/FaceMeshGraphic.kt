@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.facemeshdetector
+package ca.on.hojat.mlkitdemo.shared.facemeshdetector
 
 import android.graphics.Canvas
 import android.graphics.Color

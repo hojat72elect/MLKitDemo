@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.facemeshdetector
+package ca.on.hojat.mlkitdemo.shared.facemeshdetector
 
 import android.content.Context
 import android.util.Log
