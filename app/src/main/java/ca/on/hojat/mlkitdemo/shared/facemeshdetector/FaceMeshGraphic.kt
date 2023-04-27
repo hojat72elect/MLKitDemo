@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
 import ca.on.hojat.mlkitdemo.shared.preference.PreferenceUtils
 import com.google.mlkit.vision.common.PointF3D
 import com.google.mlkit.vision.facemesh.FaceMesh

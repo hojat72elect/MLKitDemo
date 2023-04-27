@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toStartOf="@+id/control"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ca.on.hojat.mlkitdemo.common.GraphicOverlay
+    <ca.on.hojat.mlkitdemo.shared.GraphicOverlay
         android:id="@+id/graphic_overlay"
         android:layout_width="0dp"
         android:layout_height="match_parent"

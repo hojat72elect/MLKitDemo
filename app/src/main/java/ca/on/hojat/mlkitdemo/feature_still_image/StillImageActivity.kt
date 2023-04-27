@@ -22,8 +22,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.R
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
-import ca.on.hojat.mlkitdemo.common.VisionImageProcessor
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.VisionImageProcessor
 import ca.on.hojat.mlkitdemo.shared.barcodescanner.BarcodeScannerProcessor
 import ca.on.hojat.mlkitdemo.shared.facedetector.FaceDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.facemeshdetector.FaceMeshDetectorProcessor

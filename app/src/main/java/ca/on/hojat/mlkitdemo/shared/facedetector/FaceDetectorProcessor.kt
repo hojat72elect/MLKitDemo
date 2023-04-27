@@ -2,8 +2,8 @@ package ca.on.hojat.mlkitdemo.shared.facedetector
 
 import android.content.Context
 import android.util.Log
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
-import ca.on.hojat.mlkitdemo.common.VisionProcessorBase
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.VisionProcessorBase
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face

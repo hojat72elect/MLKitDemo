@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
 import androidx.annotation.ColorInt
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
 import com.google.mlkit.vision.segmentation.SegmentationMask
 import java.nio.ByteBuffer
 

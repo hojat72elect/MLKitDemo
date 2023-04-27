@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.Log
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
 import com.google.mlkit.vision.text.Text
 import java.util.Arrays
 import kotlin.math.max

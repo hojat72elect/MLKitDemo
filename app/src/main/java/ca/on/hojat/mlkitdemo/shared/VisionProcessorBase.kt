@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common
+package ca.on.hojat.mlkitdemo.shared
 
 import android.app.ActivityManager
 import android.content.Context

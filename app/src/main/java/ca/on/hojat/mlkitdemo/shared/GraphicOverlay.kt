@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common
+package ca.on.hojat.mlkitdemo.shared
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,7 +6,7 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay.Graphic
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay.Graphic
 import com.google.common.base.Preconditions
 import com.google.common.primitives.Ints
 

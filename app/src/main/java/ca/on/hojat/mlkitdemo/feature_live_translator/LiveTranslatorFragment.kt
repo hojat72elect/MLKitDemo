@@ -31,7 +31,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import ca.on.hojat.mlkitdemo.R
-import ca.on.hojat.mlkitdemo.common.ScopedExecutor
+import ca.on.hojat.mlkitdemo.shared.ScopedExecutor
 import ca.on.hojat.mlkitdemo.databinding.LiveCameraTranslatorFragmentBinding
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService

@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
 import com.google.mlkit.vision.barcode.common.Barcode
 import kotlin.math.max
 import kotlin.math.min

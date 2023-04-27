@@ -3,7 +3,7 @@ package ca.on.hojat.mlkitdemo.shared.labeldetector
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import ca.on.hojat.mlkitdemo.common.GraphicOverlay
+import ca.on.hojat.mlkitdemo.shared.GraphicOverlay
 import com.google.mlkit.vision.label.ImageLabel
 import java.util.Locale
 

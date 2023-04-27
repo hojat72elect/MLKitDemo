@@ -6,8 +6,7 @@ import android.graphics.ImageFormat
 import android.graphics.Rect
 import android.graphics.YuvImage
 import android.util.Log
-import ca.on.hojat.mlkitdemo.common.FrameMetadata
-import ca.on.hojat.mlkitdemo.shared.extensions.rotateBitmap
+import ca.on.hojat.mlkitdemo.shared.FrameMetadata
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 

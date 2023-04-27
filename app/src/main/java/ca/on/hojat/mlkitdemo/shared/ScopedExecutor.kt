@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common
+package ca.on.hojat.mlkitdemo.shared
 
 import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicBoolean
