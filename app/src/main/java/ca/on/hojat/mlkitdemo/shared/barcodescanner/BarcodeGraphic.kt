@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.barcodescanner
+package ca.on.hojat.mlkitdemo.shared.barcodescanner
 
 import android.graphics.Canvas
 import android.graphics.Color

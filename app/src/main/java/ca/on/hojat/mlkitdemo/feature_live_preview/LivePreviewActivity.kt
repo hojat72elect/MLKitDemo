@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import ca.on.hojat.mlkitdemo.R
 import ca.on.hojat.mlkitdemo.common.VisionImageProcessor
-import ca.on.hojat.mlkitdemo.common.barcodescanner.BarcodeScannerProcessor
+import ca.on.hojat.mlkitdemo.shared.barcodescanner.BarcodeScannerProcessor
 import ca.on.hojat.mlkitdemo.common.facedetector.FaceDetectorProcessor
 import ca.on.hojat.mlkitdemo.common.facemeshdetector.FaceMeshDetectorProcessor
 import ca.on.hojat.mlkitdemo.common.labeldetector.LabelDetectorProcessor
