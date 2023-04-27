@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.usecases
+package ca.on.hojat.mlkitdemo.feature_still_image.usecases
 
 import android.content.ContentResolver
 import android.graphics.Bitmap

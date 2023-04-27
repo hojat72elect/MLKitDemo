@@ -33,7 +33,7 @@ import ca.on.hojat.mlkitdemo.common.posedetector.PoseDetectorProcessor
 import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
 import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
-import ca.on.hojat.mlkitdemo.usecases.GetBitmapFromContentUriUseCase
+import ca.on.hojat.mlkitdemo.feature_still_image.usecases.GetBitmapFromContentUriUseCase
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions
