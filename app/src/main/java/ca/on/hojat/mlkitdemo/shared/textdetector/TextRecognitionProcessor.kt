@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.textdetector
+package ca.on.hojat.mlkitdemo.shared.textdetector
 
 import android.content.Context
 import android.util.Log

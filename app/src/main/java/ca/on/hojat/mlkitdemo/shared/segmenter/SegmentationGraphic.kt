@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.segmenter
+package ca.on.hojat.mlkitdemo.shared.segmenter
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

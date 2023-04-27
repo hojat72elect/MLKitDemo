@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.segmenter
+package ca.on.hojat.mlkitdemo.shared.segmenter
 
 import android.content.Context
 import android.util.Log

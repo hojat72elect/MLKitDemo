@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.textdetector
+package ca.on.hojat.mlkitdemo.shared.textdetector
 
 import android.graphics.Canvas
 import android.graphics.Color

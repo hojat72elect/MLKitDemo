@@ -26,8 +26,8 @@ import ca.on.hojat.mlkitdemo.shared.labeldetector.LabelDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.objectdetector.ObjectDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.posedetector.PoseDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.preference.PreferenceUtils
-import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
-import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
+import ca.on.hojat.mlkitdemo.shared.segmenter.SegmenterProcessor
+import ca.on.hojat.mlkitdemo.shared.textdetector.TextRecognitionProcessor
 import ca.on.hojat.mlkitdemo.databinding.ActivityVisionCameraxLivePreviewBinding
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.MlKitException
