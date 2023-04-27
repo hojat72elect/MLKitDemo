@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.camera_translator
+package ca.on.hojat.mlkitdemo.feature_live_translator
 
 import android.content.Context
 import android.graphics.Rect
