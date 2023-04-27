@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.preference
+package ca.on.hojat.mlkitdemo.shared.preference
 
 import android.content.Context
 import android.preference.PreferenceManager

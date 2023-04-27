@@ -1,10 +1,10 @@
-package ca.on.hojat.mlkitdemo.common.posedetector
+package ca.on.hojat.mlkitdemo.shared.posedetector
 
 import android.content.Context
 import android.util.Log
 import ca.on.hojat.mlkitdemo.common.GraphicOverlay
 import ca.on.hojat.mlkitdemo.common.VisionProcessorBase
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseClassifierProcessor
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.PoseClassifierProcessor
 import com.google.android.gms.tasks.Task
 import com.google.android.odml.image.MlImage
 import com.google.mlkit.vision.common.InputImage

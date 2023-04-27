@@ -28,9 +28,9 @@ import ca.on.hojat.mlkitdemo.shared.barcodescanner.BarcodeScannerProcessor
 import ca.on.hojat.mlkitdemo.shared.facedetector.FaceDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.facemeshdetector.FaceMeshDetectorProcessor
 import ca.on.hojat.mlkitdemo.shared.labeldetector.LabelDetectorProcessor
-import ca.on.hojat.mlkitdemo.common.objectdetector.ObjectDetectorProcessor
-import ca.on.hojat.mlkitdemo.common.posedetector.PoseDetectorProcessor
-import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
+import ca.on.hojat.mlkitdemo.shared.objectdetector.ObjectDetectorProcessor
+import ca.on.hojat.mlkitdemo.shared.posedetector.PoseDetectorProcessor
+import ca.on.hojat.mlkitdemo.shared.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.common.segmenter.SegmenterProcessor
 import ca.on.hojat.mlkitdemo.common.textdetector.TextRecognitionProcessor
 import ca.on.hojat.mlkitdemo.feature_still_image.usecases.GetBitmapFromContentUriUseCase

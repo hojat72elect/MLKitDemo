@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.posedetector
+package ca.on.hojat.mlkitdemo.shared.posedetector
 
 import android.graphics.Canvas
 import android.graphics.Color

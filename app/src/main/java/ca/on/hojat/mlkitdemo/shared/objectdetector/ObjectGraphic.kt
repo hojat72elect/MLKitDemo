@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.objectdetector
+package ca.on.hojat.mlkitdemo.shared.objectdetector
 
 import android.graphics.Canvas
 import android.graphics.Color

@@ -1,12 +1,12 @@
-package ca.on.hojat.mlkitdemo.common.posedetector.classification
+package ca.on.hojat.mlkitdemo.shared.posedetector.classification
 
 import android.util.Pair
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.PoseEmbedding.getPoseEmbedding
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.maxAbs
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiply
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiplyAll
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.subtract
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.sumAbs
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.PoseEmbedding.getPoseEmbedding
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.maxAbs
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.multiply
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.multiplyAll
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.subtract
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.sumAbs
 import com.google.mlkit.vision.common.PointF3D
 import com.google.mlkit.vision.pose.Pose
 import java.util.PriorityQueue

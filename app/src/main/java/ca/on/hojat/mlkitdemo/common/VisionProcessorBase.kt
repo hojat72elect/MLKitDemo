@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.annotation.GuardedBy
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
-import ca.on.hojat.mlkitdemo.common.preference.PreferenceUtils
+import ca.on.hojat.mlkitdemo.shared.preference.PreferenceUtils
 import ca.on.hojat.mlkitdemo.shared.extensions.getBitmap
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskExecutors

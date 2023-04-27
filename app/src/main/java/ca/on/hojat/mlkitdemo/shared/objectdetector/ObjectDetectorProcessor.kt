@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.objectdetector
+package ca.on.hojat.mlkitdemo.shared.objectdetector
 
 import android.content.Context
 import android.util.Log

@@ -1,10 +1,10 @@
-package ca.on.hojat.mlkitdemo.common.posedetector.classification
+package ca.on.hojat.mlkitdemo.shared.posedetector.classification
 
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.average
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.l2Norm2D
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.multiplyAll
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.subtract
-import ca.on.hojat.mlkitdemo.common.posedetector.classification.Utils.subtractAll
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.average
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.l2Norm2D
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.multiplyAll
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.subtract
+import ca.on.hojat.mlkitdemo.shared.posedetector.classification.Utils.subtractAll
 import com.google.mlkit.vision.common.PointF3D
 import com.google.mlkit.vision.pose.PoseLandmark
 

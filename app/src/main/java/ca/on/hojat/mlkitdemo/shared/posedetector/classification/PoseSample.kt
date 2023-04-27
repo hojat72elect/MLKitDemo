@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.posedetector.classification
+package ca.on.hojat.mlkitdemo.shared.posedetector.classification
 
 import android.util.Log
 import com.google.common.base.Splitter

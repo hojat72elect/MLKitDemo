@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.posedetector.classification
+package ca.on.hojat.mlkitdemo.shared.posedetector.classification
 
 import android.os.SystemClock
 import java.util.Deque

@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.common.posedetector.classification
+package ca.on.hojat.mlkitdemo.shared.posedetector.classification
 
 import com.google.common.primitives.Floats
 import com.google.mlkit.vision.common.PointF3D
