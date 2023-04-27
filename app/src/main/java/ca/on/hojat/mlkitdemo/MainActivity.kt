@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import ca.on.hojat.mlkitdemo.feature_live_translator.LiveTranslatorActivity
 import ca.on.hojat.mlkitdemo.databinding.ActivityMainBinding
-import ca.on.hojat.mlkitdemo.digital_ink_recognition.DigitalInkMainActivity
+import ca.on.hojat.mlkitdemo.feature_ink_recognition.DigitalInkMainActivity
 import ca.on.hojat.mlkitdemo.live_preview_cv.LivePreviewActivity
 import ca.on.hojat.mlkitdemo.still_image_cv.StillImageActivity
 

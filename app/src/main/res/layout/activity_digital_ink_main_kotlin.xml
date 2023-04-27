@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ca.on.hojat.mlkitdemo.digital_ink_recognition.DrawingView
+    <ca.on.hojat.mlkitdemo.feature_ink_recognition.DrawingView
         android:id="@+id/drawing_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ca.on.hojat.mlkitdemo.digital_ink_recognition.StatusTextView
+            <ca.on.hojat.mlkitdemo.feature_ink_recognition.StatusTextView
                 android:id="@+id/status_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

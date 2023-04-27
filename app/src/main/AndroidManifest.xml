@@ -59,7 +59,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".digital_ink_recognition.DigitalInkMainActivity"
+            android:name=".feature_ink_recognition.DigitalInkMainActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 

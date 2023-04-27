@@ -1,9 +1,9 @@
-package ca.on.hojat.mlkitdemo.digital_ink_recognition
+package ca.on.hojat.mlkitdemo.feature_ink_recognition
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
-import ca.on.hojat.mlkitdemo.digital_ink_recognition.StrokeManager.StatusChangedListener
+import ca.on.hojat.mlkitdemo.feature_ink_recognition.StrokeManager.StatusChangedListener
 
 /**
  * Status bar for the test app.

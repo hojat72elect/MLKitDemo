@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.digital_ink_recognition
+package ca.on.hojat.mlkitdemo.feature_ink_recognition
 
 import android.os.Bundle
 import android.util.Log
