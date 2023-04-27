@@ -127,3 +127,13 @@ Please star and fork this repo, I will be maintaining it over time and will try 
 related library demos to
 it.<br/>
 Feel free to open issues and point out the bugs and short-comings.
+
+new architecture of the app is going to be like this:
+we will have these 5 main modules in our codebase:
+<ol>
+<li>feature_ink_recognition</li>
+<li>feature_live_translator</li>
+<li>feature_still_image</li>
+<li>feature_live_preview</li>
+<li>shared</li>
+</ol>
