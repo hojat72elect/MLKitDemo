@@ -44,12 +44,12 @@
         </activity>
 
         <activity
-            android:name=".live_preview_cv.LivePreviewActivity"
+            android:name=".feature_live_preview.LivePreviewActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".still_image_cv.StillImageActivity"
+            android:name=".feature_still_image.StillImageActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
 

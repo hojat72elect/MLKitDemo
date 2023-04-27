@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.live_preview_cv
+package ca.on.hojat.mlkitdemo.feature_live_preview
 
 import android.os.Bundle
 import android.util.Log

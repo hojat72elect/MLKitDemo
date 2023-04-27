@@ -1,4 +1,4 @@
-package ca.on.hojat.mlkitdemo.still_image_cv
+package ca.on.hojat.mlkitdemo.feature_still_image
 
 import android.app.Activity
 import android.content.ContentValues
